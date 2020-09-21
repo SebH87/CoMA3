@@ -18,6 +18,7 @@
 # ------
 # coma-mikrobiologie@uibk.ac.at
 
+
 (zenity --no-wrap --question --title="CoMA" --text "Welcome to CoMA, a pipeline for amplicon sequencing data analysis! 
 
 Do you want to start a new project?
@@ -32,10 +33,11 @@ then
 exit
 fi
 
+wd=$(pwd)
 name=$(awk -F '[|]' '{print $1}' <<<$out)
 path=$(awk -F '[|]' '{print $2}' <<<$out)
 
-if [ -d "/home/coma/$name/$path" ]
+if [ -d "$wd/$name/$path" ]
 then
 
 (zenity --no-wrap --question --title="New project" --text "ATTENTION!
@@ -51,14 +53,12 @@ exit
 fi
 fi
 
-cd
 mkdir -p $name
 cd $name
 mkdir -p $path
 cd $path
 rm -r * 2> /dev/null
 mkdir -p Data
-cd
 
 export IFS='
 '
@@ -72,11 +72,11 @@ fi
 
 for i in $(echo $files | tr "|" "\n")
 do
-cp $i /home/coma/$name/$path/Data
+cp $i $wd/$name/$path/Data
 done
 
 else
-cd
+
 project=$(zenity --title "Please choose your project:" --file-selection --directory 2> /dev/null)
 
 if [[ $? -eq 1 ]]
@@ -84,24 +84,18 @@ then
 exit
 fi
 
+echo $project
+#wd=
 name=$(echo $project | rev | cut -d"/" -f2 | rev)
 path=$(echo $project | rev | cut -d"/" -f1 | rev)
 
 fi
 
-cd
-c=$(pwd | grep -o "c.*$")
 date=$(date +%d%m%Y_%T)
-wd=$(pwd)
 
 export name=$name
 export path=$path
-export c=$c
 export wd=$wd
 export date=$date
-
-cd
-cd $name
-cd $path 
 
 script -c '/usr/local/Pipeline/pipeline_gui.sh' $date.log
