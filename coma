@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# CoMA Pipeline
+# Copyright (C) 2020 Sebastian Hupfauf, Mohammad Etemadi
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# contact
+# ------
+# coma-mikrobiologie@uibk.ac.at
+
+(zenity --no-wrap --question --title="CoMA" --text "Welcome to CoMA, a pipeline for amplicon sequencing data analysis! 
+
+Do you want to start a new project?
+Click 'No' to continue/recalculate an existing project." 2> /dev/null) && shell="Yes" || shell="No"
+
+if [ $shell = "Yes" ]
+then
+
+out=$(zenity --forms --title="New project" --text="Alright, let's start a new project!" --add-entry="Name" --add-entry="Project" 2> /dev/null)
+if [[ $? -eq 1 ]]
+then 
+exit
+fi
+
+name=$(awk -F '[|]' '{print $1}' <<<$out)
+path=$(awk -F '[|]' '{print $2}' <<<$out)
+
+if [ -d "/home/coma/$name/$path" ]
+then
+
+(zenity --no-wrap --question --title="New project" --text "ATTENTION!
+
+This path already exists. Do you really want to overwrite it?
+All data will be lost!" 2> /dev/null) && shell="Yes" || shell="No"
+
+if [ $shell = "No" ]
+then
+
+exit
+
+fi
+fi
+
+cd
+mkdir -p $name
+cd $name
+mkdir -p $path
+cd $path
+rm -r * 2> /dev/null
+mkdir -p Data
+cd
+
+export IFS='
+'
+
+files=$(zenity --title "Please select your forward AND reverse sequence files:" --file-selection --multiple 2> /dev/null)
+
+if [[ $? -eq 1 ]]
+then 
+exit
+fi
+
+for i in $(echo $files | tr "|" "\n")
+do
+cp $i /home/coma/$name/$path/Data
+done
+
+else
+cd
+project=$(zenity --title "Please choose your project:" --file-selection --directory 2> /dev/null)
+
+if [[ $? -eq 1 ]]
+then 
+exit
+fi
+
+name=$(echo $project | rev | cut -d"/" -f2 | rev)
+path=$(echo $project | rev | cut -d"/" -f1 | rev)
+
+fi
+
+cd
+c=$(pwd | grep -o "c.*$")
+date=$(date +%d%m%Y_%T)
+wd=$(pwd)
+
+export name=$name
+export path=$path
+export c=$c
+export wd=$wd
+export date=$date
+
+cd
+cd $name
+cd $path 
+
+script -c '/usr/local/Pipeline/pipeline_gui.sh' $date.log
