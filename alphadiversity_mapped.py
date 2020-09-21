@@ -13,8 +13,9 @@ import sys
 import matplotlib
 import time
 from skbio.diversity import alpha_diversity, get_alpha_diversity_metrics
-from skbio.stats.ordination import pcoa
 from skbio import TreeNode
+import scipy.stats as ss
+import scikit_posthocs as sp
 import pandas as pd
 import seaborn as sns
 import zenipy as zp
@@ -130,6 +131,21 @@ div_df.to_csv("alphadiversity_" + mname + "_" + var + ".txt", sep="\t")
 combined_df = pd.concat([div_df, map_df], axis=1).reset_index()
 combined_df.rename(columns={'index':'sample'}, inplace=True)
 combined_df = combined_df.sort_values(by=[var])
+
+#Kruskal-Wallis test
+cat_dict = {}
+for upar in getattr(combined_df, var).unique():
+    cat_dict[str(upar)] = list(combined_df[combined_df[var] == upar][metric])
+H, p = ss.kruskal(*cat_dict.values())
+
+#Post-hoc test with Benjamini-Hochberg correction
+con = sp.posthoc_conover(combined_df, val_col=metric, group_col=var, p_adjust = 'fdr_bh')
+with open("statistics_" + mname + "_" + var + ".txt", "w") as st:
+    st.write("Kruskal-Wallis H-test:\n\n")
+    st.write("H\t" + str(H) + "\n")
+    st.write("p-value\t" + str(p) + "\n\n\n")
+    st.write("Conover post-hoc test with Benjamini/Hochberg correction:\n\n")
+    st.write(con.to_string())
 
 sns.set_style("ticks", {"ytick.major.size": "2.0"})
 ax = sns.barplot(data=combined_df, x=var, y=metric, color=col, ci="sd", errwidth=0.6, capsize=0.1)
