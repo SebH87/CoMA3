@@ -332,10 +332,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Data
+cd $wd/Data
 
 cp /usr/local/Pipeline/create_map.py ./
 python3 create_map.py name.txt map.txt &>> $wd/${date}_detailed.log
@@ -353,7 +350,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 ref="RDP"
 
@@ -404,7 +401,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -421,7 +418,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log #-tax_group fungi
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -431,7 +428,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -439,9 +436,7 @@ fi
 elif [ $sim = "lambda" ]
 then
 
-cd
-cd $name
-cd $path
+cd $wd
 
 ref=$(zenity --text "Please choose a reference database:
 
@@ -487,7 +482,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -504,7 +499,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -514,16 +509,13 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i /home/$c/$name/$path/Data/filtered_reads/good_sequences/ -m /home/$c/$name/$path/Data/map.txt -o /home/$c/$name/$path/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
 fi
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 if [ -f "OTU.biom" ]
 then
@@ -579,10 +571,7 @@ then
 
 start=$(date +%s)
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 echo -e "\nRemoval of rare OTUs proceeding ..."
 
@@ -639,10 +628,7 @@ fi
 
 echo -e "\nRarefaction curves are now created ..."
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 mkdir -p rarefaction_curves
 cd rarefaction_curves
 
@@ -675,10 +661,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/reads.py ./
 python3 reads.py otu_table.txt 2>> $wd/${date}_detailed.log
@@ -717,10 +700,7 @@ then
 
 echo -e "\nRenaming of samples in progress ..."
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/rename.py ./
 python3 rename.py otu_table.txt 2>> $wd/${date}_detailed.log
@@ -742,10 +722,7 @@ These information can be used in the upcoming steps to group the samples specifi
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/mapping.py ./
 python3 mapping.py otu_table.txt mapping.txt 2>> $wd/${date}_detailed.log
@@ -765,10 +742,7 @@ then
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
 python3 map_group.py otu_table.txt mapping.txt current_otu_table.txt 2>> $wd/${date}_detailed.log
@@ -776,10 +750,7 @@ rm map_group.py
 
 else
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp otu_table.txt ./current_otu_table.txt
 
@@ -805,10 +776,7 @@ echo -e "\nSummary report is beeing created now ..."
 for kingdom in $(echo $sr | sed "s/,/ /g")
 do
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/kingdom_table.py ./
@@ -846,10 +814,7 @@ start=$(date +%s)
 
 echo -e "\nSummary report is beeing created now ..."
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/specific_taxon.py ./
@@ -870,43 +835,6 @@ fi
 fi
 fi
 
-: '
-#Online graphics - CURENTLY NOT WORKING
-
-(zenity --question --title $project --text "Do you want to compute online graphics for your samples?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
-
-if [ $shell = "Yes" ]
-then
-
-start=$(date +%s)
-
-echo -e "\nOnline graphics are beeing created now ..."
-
-cd
-cd $name
-cd $path
-cd Results
-
-cp /usr/local/Pipeline/archaea.py ./
-python archaea.py otu_table.txt otu_table_archaea.txt otu_table_bacteria.txt &>> $wd/${date}_detailed.log
-rm archaea.py
-rm -f OTU_archaea.biom
-biom convert -i otu_table_archaea.txt -o OTU_archaea.biom --to-hdf5 --table-type="OTU table" --process-obs-metadata taxonomy &>> $wd/${date}_detailed.log
-biom convert -i otu_table_bacteria.txt -o OTU_bacteria.biom --to-hdf5 --table-type="OTU table" --process-obs-metadata taxonomy &>> $wd/${date}_detailed.log
-
-summarize_taxa_through_plots.py -i OTU.biom -o Plots_complete -f 2 &>> $wd/${date}_detailed.log
-summarize_taxa_through_plots.py -i OTU_archaea.biom -o Plots_archaea -f 2 &>> $wd/${date}_detailed.log
-
-end=$(date +%s)
-dur=$(($end-$start))
-
-echo -e "\nProcess succeeded! (Duration: "$dur"s)\n
-You can access an area chart as well as a bar chart by opening the .html files 
-in your browser."
-echo -e "\n________________________________________________________________________________\n"
-fi
-'
-
 #Taxa plots
 
 (zenity --no-wrap --question --title $project --text "Do you want to create plots of the most important taxa?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
@@ -919,10 +847,7 @@ then
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
 python3 map_group.py otu_table.txt mapping.txt current_otu_table.txt 2>> $wd/${date}_detailed.log
@@ -930,10 +855,7 @@ rm map_group.py
 
 else
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp otu_table.txt ./current_otu_table.txt
 
@@ -981,10 +903,7 @@ echo -e "\nPlots are beeing created ..."
 for kd in $(echo $ki | sed "s/,/ /g")
 do
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/kingdom_table.py ./
 python3 kingdom_table.py current_otu_table.txt $kd.txt $kd &>> $wd/${date}_detailed.log
@@ -1001,10 +920,7 @@ python3 otuplots.py $kd.txt $thresh $fformat $dpi $answer &>> $wd/${date}_detail
 rm otuplots.py
 rm $kd.txt
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 rm $kd.txt
 
@@ -1055,10 +971,7 @@ then
 start=$(date +%s)
 echo -e "\nPlots are beeing created ..."
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 cp /usr/local/Pipeline/specific_taxon.py ./
 python3 specific_taxon.py current_otu_table.txt $tax 2>> $wd/${date}_detailed.log
@@ -1075,10 +988,7 @@ python3 otuplots.py $tax.txt $thresh $fformat $dpi $answer &>> $wd/${date}_detai
 rm otuplots.py
 rm $tax.txt
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 
 rm $tax.txt
 rm current_otu_table.txt &>> $wd/${date}_detailed.log
@@ -1102,10 +1012,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 mkdir -p Venn_plots
 cd Venn_plots
 
@@ -1141,10 +1048,7 @@ then
 if [ $shell = "Yes" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 mkdir -p alpha_diversity
 
 cd alpha_diversity
@@ -1161,10 +1065,7 @@ rm alphadiversity_mapped.py
 
 else
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 mkdir -p alpha_diversity
 
 cd alpha_diversity
@@ -1191,10 +1092,7 @@ then
 if [ $beta = "PCoA" ]
 then
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 mkdir -p beta_diversity
 cd beta_diversity
 mkdir -p ordination
@@ -1317,10 +1215,7 @@ start=$(date +%s)
 
 echo -e "\nCluster analysis proceeding ..."
 
-cd
-cd $name
-cd $path
-cd Results
+cd $wd/Results
 mkdir -p beta_diversity
 cd beta_diversity
 mkdir -p cluster_analysis
