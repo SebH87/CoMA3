@@ -27,22 +27,20 @@ Click 'No' to continue/recalculate an existing project." 2> /dev/null) && shell=
 if [ $shell = "Yes" ]
 then
 
-out=$(zenity --forms --title="New project" --text="Alright, let's start a new project!" --add-entry="Name" --add-entry="Project" 2> /dev/null)
+out=$(zenity --forms --title="New project" --text="Alright, let's start a new project!" --add-entry="Project name" 2> /dev/null)
 if [[ $? -eq 1 ]]
 then 
 exit
 fi
 
-wd=$(pwd)
-name=$(awk -F '[|]' '{print $1}' <<<$out)
-path=$(awk -F '[|]' '{print $2}' <<<$out)
+pn=$(awk -F '[|]' '{print $1}' <<<$out)
 
-if [ -d "$wd/$name/$path" ]
+if [ -d "$pn" ]
 then
 
 (zenity --no-wrap --question --title="New project" --text "ATTENTION!
 
-This path already exists. Do you really want to overwrite it?
+This project already exists. Do you really want to overwrite it?
 All data will be lost!" 2> /dev/null) && shell="Yes" || shell="No"
 
 if [ $shell = "No" ]
@@ -53,10 +51,9 @@ exit
 fi
 fi
 
-mkdir -p $name
-cd $name
-mkdir -p $path
-cd $path
+mkdir -p $pn
+cd $pn
+wd=$(pwd)
 rm -r * 2> /dev/null
 mkdir -p Data
 
@@ -72,29 +69,21 @@ fi
 
 for i in $(echo $files | tr "|" "\n")
 do
-cp $i $wd/$name/$path/Data
+cp $i $wd/Data
 done
 
 else
 
-project=$(zenity --title "Please choose your project:" --file-selection --directory 2> /dev/null)
+wd=$(zenity --title "Please choose your project:" --file-selection --directory 2> /dev/null)
 
 if [[ $? -eq 1 ]]
 then 
 exit
 fi
-
-echo $project
-#wd=
-name=$(echo $project | rev | cut -d"/" -f2 | rev)
-path=$(echo $project | rev | cut -d"/" -f1 | rev)
-
 fi
 
 date=$(date +%d%m%Y_%T)
 
-export name=$name
-export path=$path
 export wd=$wd
 export date=$date
 
