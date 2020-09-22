@@ -87,4 +87,5 @@ date=$(date +%d%m%Y_%T)
 export wd=$wd
 export date=$date
 
+cd $wd
 script -c '/usr/local/Pipeline/pipeline_gui.sh' $date.log
