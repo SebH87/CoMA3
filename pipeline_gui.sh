@@ -36,9 +36,18 @@ proc=$(head -n 1 $wd/Data/proc.txt 2>> $wd/${date}_detailed.log) || proc=$(cat /
 if [ $shell = "Yes" ]
 then
 
-proc=$(zenity --scale --text "How many CPUs du you want to use?" --title $project --value=1 --min-value=1 --max-value=$proc --step=1 2>> $wd/${date}_detailed.log)
+max_proc=$(cat /proc/cpuinfo | grep processor | wc -l)
+if [ $max_proc = 1 ]
+then
 
+echo "Only 1 CPU detected! All analyses will be done with a single core."
+proc=1
 echo $proc > proc.txt
+
+else
+proc=$(zenity --scale --text "How many CPUs du you want to use?" --title $project --value=1 --min-value=1 --max-value=$max_proc --step=1 2>> $wd/${date}_detailed.log)
+echo $proc > proc.txt
+fi
 
 (zenity --no-wrap --question --title $project --text "Are you using paired-end reads (a forward and reverse file per sample)?
 Click 'No' if you have single-end reads (only a single file per sample)." &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
