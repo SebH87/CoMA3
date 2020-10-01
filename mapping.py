@@ -28,6 +28,7 @@ zp.message(title="CoMA", text="Please fill in all missing data in the map file; 
 os.system("libreoffice --calc %s" %(outfile))
 
 with open(outfile) as outf:
+    outf.readline()
     if len(outf.readline().strip().split("\t")) == 1:
         zp.error(title="CoMA", text="ATTENTION: Your map file is not tab-delimited! Please repeat this step and save the text file correctly using 'tab' as separator.")
         print("\nProcess terminated!")
