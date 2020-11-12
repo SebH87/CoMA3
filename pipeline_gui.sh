@@ -62,27 +62,14 @@ e.g. _R2_001.fastq.gz or _REV_001.fastq.gz:" 2>> $wd/${date}_detailed.log)
 if [[ $? -ne 1 ]]
 then 
 
-start=$(date +%s)
-
 f=$(awk -F '[|]' '{print $1}' <<<$sequence)
 r=$(awk -F '[|]' '{print $2}' <<<$sequence)
 echo $f > pattern.txt
 echo $r >> pattern.txt
 
 cp /usr/local/Pipeline/filelist.py ./
-python3 filelist.py $f name.txt $proc 2>> $wd/${date}_detailed.log
+python3 filelist.py $f name.txt $proc $r 2>> $wd/${date}_detailed.log
 rm filelist.py
-
-echo -e "\nUsed CPUs: " $proc
-
-echo -e "\nCommon part of forward sequences: " $f
-echo "Common part of reverse sequences: " $r
-
-end=$(date +%s)
-dur=$(($end-$start))
-
-echo -e "\nDONE! Name files are assigned. (Duration: "$dur"s)"
-echo -e "\n________________________________________________________________________________\n"
 
 fi
 
@@ -102,8 +89,6 @@ cp /usr/local/Pipeline/filelist.py ./
 python3 filelist.py $pat name.txt $proc 2>> $wd/${date}_detailed.log
 rm filelist.py
 
-#cd $wd/Data
-
 mkdir -p processed_reads
 
 for file in $(<name.txt)
@@ -113,21 +98,16 @@ mv processed_reads/${file}$pat processed_reads/${file}.fastq.gz 2>> $wd/${date}_
 gunzip --force processed_reads/${file}.fastq.gz 2>> $wd/${date}_detailed.log
 done
 
-echo -e "\nUsed CPUs: " $proc
-
-echo -e "\nCommon part of all sequences: " $pat
-
-end=$(date +%s)
-dur=$(($end-$start))
-
-echo -e "\nDONE! Name files are assigned. (Duration: "$dur"s)"
-echo -e "\n________________________________________________________________________________\n"
-
 fi
 fi
 fi
 
 #Merging
+
+if ! [[ -f "pattern.txt" ]]
+then
+echo "" > pattern.txt
+fi
 
 if [[ $(wc -l </$wd/Data/pattern.txt) = 2 ]]
 then
@@ -136,6 +116,12 @@ then
 
 if [ $shell = "Yes" ]
 then
+
+if ! [[ -f "threads.txt" ]]
+then
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
 
 start=$(date +%s)
 echo -e "\nMerging process proceeding ..."
@@ -149,12 +135,35 @@ r=$(tail -n 1 pattern.txt)
 
 for thread in $(<threads.txt)
 do
+
+if ! [[ -f $thread ]]
+then
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for file in $(<${thread})
 do
+
 pandaseq -f ${file}$f -r ${file}$r -F -w processed_reads/${file}.fastq -g processed_reads/${file}.log &>> $wd/${date}_detailed.log &
+
 done
 done
 wait
+
+for thread in $(<threads.txt)
+do
+for file in $(<${thread})
+do
+
+if ! [ -s processed_reads/${file}.fastq ]
+then
+echo -e "\nATTENTION: There was an error detected during the merging process, at least one of your files containing merged reads is empty! Check the pattern.txt file and if all paired-end files are provided. CoMA run terminated!"
+xargs kill
+fi
+
+done
+done
 
 end=$(date +%s)
 dur=$(($end-$start))
@@ -184,11 +193,25 @@ cd ..
 
 echo -e "\nQuality check of input files proceeding ..."
 
+if ! [[ -f "threads.txt" ]]
+then
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for thread in $(<threads.txt)
 do
+
+if ! [[ -f $thread ]]
+then
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for file in $(<${thread})
 do
 prinseq-lite -fastq processed_reads/${file}.fastq -graph_data quality_reports/quality_before_filtering/${file}.gd -out_good null -out_bad null &>> $wd/${date}_detailed.log &
+
 done
 done
 wait
@@ -242,8 +265,21 @@ mkdir -p good_sequences
 mkdir -p discarded_sequences
 cd ..
 
+if ! [[ -f "threads.txt" ]]
+then
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for thread in $(<threads.txt)
 do
+
+if ! [[ -f $thread ]]
+then
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for file in $(<${thread})
 do
 prinseq-lite -fastq processed_reads/${file}.fastq -out_good filtered_reads/good_sequences/${file} -out_bad filtered_reads/discarded_sequences/${file} -trim_left $tl -trim_right $tr -max_len $maxl -min_len $minl  -min_qual_mean $mq -ns_max_n $amb -out_format 5 -log &>> $wd/${date}_detailed.log &
@@ -286,8 +322,21 @@ cd ..
 
 echo -e "\nQuality control of trimmed reads proceeding ..."
 
+if ! [[ -f "threads.txt" ]]
+then
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for thread in $(<threads.txt)
 do
+
+if ! [[ -f $thread ]]
+then
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
+
 for file in $(<${thread})
 do
 prinseq-lite -fastq filtered_reads/good_sequences/${file}.fastq -graph_data quality_reports/good_sequences/${file}.gd -out_good null -out_bad null &>> $wd/${date}_detailed.log &
@@ -340,6 +389,12 @@ fi
 
 if [ $shell = "Yes" ]
 then
+
+if ! [[ -f "name.txt" ]]
+then
+echo -e "\nATTENTION: Your name.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+xargs kill
+fi
 
 cd $wd/Data
 
@@ -528,6 +583,13 @@ cd $wd/Results
 
 if [ -f "OTU.biom" ]
 then
+
+if ! [ -s "OTU.biom" ]
+then
+echo -e "\nATTENTION: There was an error detected during the clustering/aligning process, your OTU table file is empty! CoMA run terminated!"
+xargs kill
+fi
+
 biom convert -i OTU.biom -o otu_table.txt --to-tsv --header-key taxonomy  &>> $wd/${date}_detailed.log
 
 cp /usr/local/Pipeline/report.py ./
@@ -553,6 +615,7 @@ echo -e "\n_____________________________________________________________________
 
 else
 echo -e "An ERROR raised during the blasting process!"
+xargs kill
 
 echo -e "\n________________________________________________________________________________\n"
 fi
