@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2020
 #
 # Script creates a rarefaction plot out of a given rarefaction file.
 #
@@ -88,7 +88,11 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 for i in range(len(samples)):   
     plt.plot(xaxis[:len(nsamples[i])], nsamples[i], color=color_list[i])
-ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,}".format(int(x))))
+locs, labels = plt.yticks()
+if locs[2] > 1:
+    ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,}".format(int(x))))
+else:
+    ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,}".format(round(float(x), 4))))
 ax.get_xaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,}".format(int(x))))
 ax.set_xlim(xmin=0)
 ax.set_ylim(ymin=0)
