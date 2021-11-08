@@ -19,6 +19,7 @@ import scikit_posthocs as sp
 import pandas as pd
 import seaborn as sns
 import zenipy as zp
+import numpy as np
 import matplotlib.pyplot as plt
 
 matplotlib.use("Agg")
@@ -126,14 +127,17 @@ else:
     div = alpha_diversity(metric, df.T, names)
 div_df = pd.DataFrame(div, columns=[metric])
 
-div_df.to_csv("alphadiversity_" + mname + "_" + var + ".txt", sep="\t")
-
 div_df.reset_index(drop=True, inplace=True)
 map_df.reset_index(drop=True, inplace=True)
 
 combined_df = pd.concat([div_df, map_df], axis=1)
 combined_df.rename(columns={'index':'sample'}, inplace=True)
 combined_df = combined_df.sort_values(by=[var])
+
+output_df = pd.concat([combined_df.groupby(var).mean(), combined_df.groupby(var).std()], axis=1)
+output_df.columns = ["Mean", "Std"]
+output_df = output_df.replace(np.nan, '', regex=True)
+output_df.to_csv("alphadiversity_" + mname + "_" + var + ".txt", sep="\t")
 
 #Kruskal-Wallis test
 cat_dict = {}
