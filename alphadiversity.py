@@ -120,6 +120,7 @@ sns.set_style("ticks", {"ytick.major.size": "2.0"})
 ax = sns.barplot(data=div_df.T, color=col)
 sns.despine(right=True)
 plt.ylabel(label)
+plt.xticks(rotation=90)
 
 plt.savefig(figname, dpi=dpi)
 
