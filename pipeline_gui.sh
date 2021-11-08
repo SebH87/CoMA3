@@ -633,10 +633,20 @@ then
 
 depth=$(zenity --text "Please enter the minimum number of reads for an OTU to be retained:" --title $project --scale --min-value=0 --max-value=100000 --step=1 2>> $wd/${date}_detailed.log)
 
+if [[ $depth = 0 ]] || [[ $depth = "" ]]
+then
+depth=1
+fi
+
 if [[ $? -ne 1 ]]
 then
 
 samples=$(zenity --text "Please enter the minimum number of samples in which an OTU must be present to be retained:" --title $project --scale --min-value=0 --max-value=100000 --step=1 2>> $wd/${date}_detailed.log)
+
+if [[ $samples = 0 ]] || [[ $samples = "" ]]
+then
+samples=1
+fi
 
 if [[ $? -ne 1 ]]
 then  
