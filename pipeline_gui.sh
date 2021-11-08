@@ -414,7 +414,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 ref="RDP"
 
@@ -465,7 +465,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -482,7 +482,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -492,7 +492,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -546,7 +546,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -563,7 +563,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -573,7 +573,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus.pl -c /usr/local/Pipeline/lotus_pipeline/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus_pipeline/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
