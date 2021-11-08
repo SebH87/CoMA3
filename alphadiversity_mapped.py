@@ -128,7 +128,10 @@ div_df = pd.DataFrame(div, columns=[metric])
 
 div_df.to_csv("alphadiversity_" + mname + "_" + var + ".txt", sep="\t")
 
-combined_df = pd.concat([div_df, map_df], axis=1).reset_index()
+div_df.reset_index(drop=True, inplace=True)
+map_df.reset_index(drop=True, inplace=True)
+
+combined_df = pd.concat([div_df, map_df], axis=1)
 combined_df.rename(columns={'index':'sample'}, inplace=True)
 combined_df = combined_df.sort_values(by=[var])
 
@@ -151,6 +154,7 @@ sns.set_style("ticks", {"ytick.major.size": "2.0"})
 ax = sns.barplot(data=combined_df, x=var, y=metric, color=col, ci="sd", errwidth=0.6, capsize=0.1)
 sns.despine(right=True)
 plt.ylabel(label)
+plt.xticks(rotation=90)
 
 plt.savefig(figname, dpi=dpi)
 
