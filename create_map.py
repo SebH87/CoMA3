@@ -22,8 +22,7 @@ with open(outfile, "w") as of:
     for pos in range(len(names)):
         if x == 0:
             of.write(names[pos] + "\t" + "BarcodeSequence" + "\t" +
-                     "LinkerPrimerSequence" + "\t" + fastq[pos] + "\t" + "Treatment" +
-                     "\t" + "DOB" + "\t" + "Replicate" + "\t" + "Description" + "\n")
+                     "LinkerPrimerSequence" + "\t" + fastq[pos] + "\t" + "SequencingRun" + "\n")
             x += 1
         else:
-            of.write(names[pos] + "\t" + "\t" + "\t" + fastq[pos] + "\t" + "\t" + "\t" + "\t" + "\n")
+            of.write(names[pos] + "\t" + "\t" + "\t" + fastq[pos] + "\tA" + "\n")
