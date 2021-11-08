@@ -586,7 +586,7 @@ then
 
 if ! [ -s "OTU.biom" ]
 then
-echo -e "\nATTENTION: There was an error detected during the clustering/aligning process, your OTU table file is empty! CoMA run terminated!"
+echo -e "\nATTENTION: There was an error detected during the clustering/aligning process, your abundance file is empty! CoMA run terminated!"
 xargs kill
 fi
 
@@ -631,7 +631,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
-depth=$(zenity --text "Please enter the minimum number of reads for an OTU to be retained:" --title $project --scale --min-value=0 --max-value=100000 --step=1 2>> $wd/${date}_detailed.log)
+depth=$(zenity --text "Please enter the minimum number of reads for an OTU/ASV/ZOTU to be retained:" --title $project --scale --min-value=0 --max-value=100000 --step=1 2>> $wd/${date}_detailed.log)
 
 if [[ $depth = 0 ]] || [[ $depth = "" ]]
 then
@@ -641,7 +641,7 @@ fi
 if [[ $? -ne 1 ]]
 then
 
-samples=$(zenity --text "Please enter the minimum number of samples in which an OTU must be present to be retained:" --title $project --scale --min-value=0 --max-value=100000 --step=1 2>> $wd/${date}_detailed.log)
+samples=$(zenity --text "Please enter the minimum number of samples in which an OTU/ASV/ZOTU must be present to be retained:" --title $project --scale --min-value=0 --max-value=100000 --step=1 2>> $wd/${date}_detailed.log)
 
 if [[ $samples = 0 ]] || [[ $samples = "" ]]
 then
