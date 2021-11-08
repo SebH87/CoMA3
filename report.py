@@ -24,8 +24,8 @@ for file in glob.glob(os.getcwd() + "/LotuSLogS/SDMperFile/*"):
         for line in f:
             if line.startswith("Reads processed:"):
                 before_sdm.append(int(line.strip().split(" ")[-1].replace(",", "")))
-            if line.startswith("Accepted:"):
-                after_sdm.append(int(line.strip().split(" ")[1].replace(",", "")))
+            if line.startswith("Accepted (High qual):"):
+                after_sdm.append(int(line.strip().split(" ")[3].replace(",", "")))
 
 chimeras = []
 chim_DF = pd.read_csv(os.getcwd() + "/ExtraFiles/otu_mat.chim.txt", delimiter="\t", index_col=0)
