@@ -424,7 +424,7 @@ then
 ref=$(zenity --text "Please choose a reference database:
 
 Databases can be combined, with the first having the highest prioirty (e.g. PR2,SLV would 
-first use PR2 to assign OTUs and all unassigned OTUs would be searched for with SILVA).
+first use PR2 to assign OTUs/ASVs/ZOTUs and all unassigned OTUs/ASVs/ZOTUs would be searched for with SILVA).
 
 For detailed information on custom databases and how they need to be formatted, please visit:
 http://psbweb05.psb.ugent.be/lotus/images/CustomDB_LotuS.pdf 
@@ -505,7 +505,7 @@ cd $wd
 ref=$(zenity --text "Please choose a reference database:
 
 Databases can be combined, with the first having the highest prioirty (e.g. PR2,SLV would 
-first use PR2 to assign OTUs and all unassigned OTUs would be searched for with SILVA).
+first use PR2 to assign OTUs/ASVs/ZOTUs and all unassigned OTUs/ASVs/ZOTUs would be searched for with SILVA).
 
 For detailed information on custom databases and how they need to be formatted, please visit:
 http://psbweb05.psb.ugent.be/lotus/images/CustomDB_LotuS.pdf 
@@ -626,7 +626,7 @@ fi
 
 #Singleton removal
 
-(zenity --no-wrap --question --title $project --text "Do you want to remove rare OTUs from your dataset?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
+(zenity --no-wrap --question --title $project --text "Do you want to remove rare OTUs/ASVs/ZOTUs from your dataset?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
 
 if [ $shell = "Yes" ]
 then
@@ -655,7 +655,7 @@ start=$(date +%s)
 
 cd $wd/Results
 
-echo -e "\nRemoval of rare OTUs proceeding ..."
+echo -e "\nRemoval of rare OTUs/ASVs/ZOTUs proceeding ..."
 
 mv OTU.biom OTU_original.biom
 mv otu_table.txt otu_table_original.txt
@@ -666,7 +666,7 @@ biom convert -i OTU.biom -o otu_table.txt --to-tsv --header-key taxonomy &>> $wd
 end=$(date +%s)
 dur=$(($end-$start))
 
-echo -e "\nProcess succeeded! (Duration: "$dur"s) Rare OTUs are removed from your 
+echo -e "\nProcess succeeded! (Duration: "$dur"s) Rare OTUs/ASVs/ZOTUs are removed from your 
 dataset using the following settings:"
 echo
 echo "Minimum sum of reads within all samples: " $depth
@@ -1120,7 +1120,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
-metric=$(zenity --text "Please choose a metric for the alpha diversity calculation:" --title $project --list --column "Metric" --column "" "OTU" "Number of distinct OTUs" "Shannon" "Shannon-Wiener index" "Simpson" "Simpson's index" "Pielou" "Pielou's evenness index" "Goods_coverage" "Good's coverage of counts" "Chao1" "Chao1 richness estimator" "Faith_PD" "Faith's phylogenetic diversity" --separator="," --height=300 --width=180 2>> $wd/${date}_detailed.log)
+metric=$(zenity --text "Please choose a metric for the alpha diversity calculation:" --title $project --list --column "Metric" --column "" "OTU" "Number of distinct OTUs/ASVs/ZOTUs" "Shannon" "Shannon-Wiener index" "Simpson" "Simpson's index" "Pielou" "Pielou's evenness index" "Goods_coverage" "Good's coverage of counts" "Chao1" "Chao1 richness estimator" "Faith_PD" "Faith's phylogenetic diversity" --separator="," --height=300 --width=180 2>> $wd/${date}_detailed.log)
 
 if [[ $? -ne 1 ]]
 then
