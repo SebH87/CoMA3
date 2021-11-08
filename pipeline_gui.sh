@@ -1128,7 +1128,7 @@ cp /usr/local/Pipeline/alphadiversity_mapped.py ./
 
 if [[ -f "../mapping.txt" ]]
 then
-python3 alphadiversity_mapped.py ../otu_table.txt $metric ../mapping.txt ../Tree.tre 2>> $wd/${date}_detailed.log
+python3 alphadiversity_mapped.py ../otu_table.txt $metric ../mapping.txt ../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 else
 echo -e "\nYou are missing a map file, process terminated!"
 echo -e "\n________________________________________________________________________________\n"
@@ -1142,7 +1142,7 @@ mkdir -p alpha_diversity
 
 cd alpha_diversity
 cp /usr/local/Pipeline/alphadiversity.py ./
-python3 alphadiversity.py ../otu_table.txt $metric ../Tree.tre 2>> $wd/${date}_detailed.log
+python3 alphadiversity.py ../otu_table.txt $metric ../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 rm alphadiversity.py
 
 fi
@@ -1184,13 +1184,13 @@ if [ $shell = "Yes" ]
 then
 
 cp /usr/local/Pipeline/ordination_mapped.py ./
-python3 ordination_mapped.py ../../otu_table.txt $metric ../../mapping.txt ../../Tree.tre 2>> $wd/${date}_detailed.log
+python3 ordination_mapped.py ../../otu_table.txt $metric ../../mapping.txt ../../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 rm ordination_mapped.py
 
 else
 
 cp /usr/local/Pipeline/ordination.py ./
-python3 ordination.py ../../otu_table.txt $metric ../../Tree.tre 2>> $wd/${date}_detailed.log
+python3 ordination.py ../../otu_table.txt $metric ../../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 rm ordination.py
 
 fi
