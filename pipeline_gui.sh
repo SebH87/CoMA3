@@ -933,6 +933,8 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
 python3 map_group.py otu_table.txt mapping.txt current_otu_table.txt 2>> $wd/${date}_detailed.log
+metavar=$(cat metavar.txt)
+rm metavar.txt
 rm map_group.py
 
 else
@@ -940,6 +942,7 @@ else
 cd $wd/Results
 
 cp otu_table.txt ./current_otu_table.txt
+metavar="individual"
 
 fi
 
@@ -955,6 +958,13 @@ if [[ $? -ne 1 ]]
 then
 
 (zenity --no-wrap --question --title $project --text "Do you want to include unassigned taxa in the plots?" &>> $wd/${date}_detailed.log) && answer="Yes" || answer="No"
+
+if [ $answer = "Yes" ]
+then
+ass="including_unassigned"
+else
+ass="without_unassigned"
+fi
 
 fformat=$(zenity --text "Please choose a file format:" --title $project --list --column "File format" --column "" "EPS" "Encapsulated Postscript" "JPEG" "Joint Photographic Experts Group" "PDF" "Portable Document Format" "PNG" "Portable Network Graphics" "PS" "Postscript" "RAW" "Raw bitmap" "RGBA" "RGBA bitmap" "SVG" "Scalable Vector Graphics" "SVGZ" "Compressed SVG" "TIFF" "Tagged Image File Format" --separator="," --height=300 --width=400 2>> $wd/${date}_detailed.log)
 
@@ -993,12 +1003,14 @@ rm kingdom_table.py
 
 mkdir -p taxa_plots
 cd taxa_plots
+mkdir -p $metavar"_"$thresh"%_"$ass
+cd $metavar"_"$thresh"%_"$ass
 
 mkdir -p $kd
 cd $kd
 cp /usr/local/Pipeline/otuplots.py ./
-cp ../../$kd.txt ./
-python3 otuplots.py $kd.txt $thresh $fformat $dpi $answer &>> $wd/${date}_detailed.log
+cp ../../../$kd.txt ./
+python3 otuplots.py $kd.txt $thresh $fformat $dpi $answer 2>> $wd/${date}_detailed.log
 rm otuplots.py
 rm $kd.txt
 
@@ -1027,6 +1039,13 @@ if [[ $? -ne 1 ]]
 then 
 
 (zenity --no-wrap --question --title $project --text "Do you want to include unassigned taxa in the plots?" &>> $wd/${date}_detailed.log) && answer="Yes" || answer="No"
+
+if [ $answer = "Yes" ]
+then
+ass="including_unassigned"
+else
+ass="without_unassigned"
+fi
 
 fformat=$(zenity --text "Please choose a file format:" --title $project --list --column "File format" --column "" "EPS" "Encapsulated Postscript" "JPEG" "Joint Photographic Experts Group" "PDF" "Portable Document Format" "PNG" "Portable Network Graphics" "PS" "Postscript" "RAW" "Raw bitmap" "RGBA" "RGBA bitmap" "SVG" "Scalable Vector Graphics" "SVGZ" "Compressed SVG" "TIFF" "Tagged Image File Format" --separator="," --height=300 --width=400 2>> $wd/${date}_detailed.log)
 
@@ -1061,12 +1080,14 @@ rm specific_taxon.py
 
 mkdir -p taxa_plots
 cd taxa_plots
+mkdir -p $metavar"_"$thresh"%_"$ass
+cd $metavar"_"$thresh"%_"$ass
 
 mkdir -p $tax
 cd $tax
 cp /usr/local/Pipeline/otuplots.py ./
-cp ../../$tax.txt ./
-python3 otuplots.py $tax.txt $thresh $fformat $dpi $answer &>> $wd/${date}_detailed.log
+cp ../../../$tax.txt ./
+python3 otuplots.py $tax.txt $thresh $fformat $dpi $answer 2>> $wd/${date}_detailed.log
 rm otuplots.py
 rm $tax.txt
 
