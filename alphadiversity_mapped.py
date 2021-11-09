@@ -70,7 +70,11 @@ if metric == "Faith_PD":
     label = "Faith's PD"
     mname = "faith_pd"
 
-var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to group your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
+if len(map_df.columns) > 1:
+    var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to group your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
+else:
+    var = map_df.columns[0]
+    print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
 
 ftype = zp.entry(title="CoMA", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
 if ftype == None:
