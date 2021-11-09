@@ -43,5 +43,8 @@ with open("temp.txt") as t:
     with open(outfile, "w") as outf:
         outf.write("# Constructed from biom file\n")
         outf.write(t.read())
+        
+with open("metavar.txt", "w") as mv:
+    mv.write(var)
 
 os.remove("temp.txt")
