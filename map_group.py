@@ -18,7 +18,11 @@ samples = list(otu_DF.columns)[0:-1]
 
 map_DF = pd.read_csv(map_file, delimiter="\t", index_col=0)
 
-var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to group your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
+if len(map_DF.columns) > 1:
+    var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to group your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
+else:
+    var = map_DF.columns[0]
+    print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
 
 DF = pd.concat([otu_DF.T, map_DF], axis=1)
 DF = DF.reset_index().groupby(var)
