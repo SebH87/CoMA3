@@ -88,7 +88,11 @@ if metric == "Minkowski":
     metric = "minkowski"
     mname = "minkowski"      
 
-var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to color your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
+if len(map_DF.columns) > 1:
+    var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to color your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
+else:
+    var = map_DF.columns[0]
+    print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
 three = zp.question(title="CoMA", text="Do you want to see a 3D illustration of your ordination?")
 two = zp.question(title="CoMA", text="Do you want to create a two-dimensional plot of your ordination?")
 
