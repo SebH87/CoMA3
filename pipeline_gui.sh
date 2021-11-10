@@ -666,12 +666,19 @@ biom convert -i OTU.biom -o otu_table.txt --to-tsv --header-key taxonomy &>> $wd
 end=$(date +%s)
 dur=$(($end-$start))
 
+if [ $depth = 1 ] && [ $samples = 1 ]
+then
+echo -e "\nProcess terminated! No OTUs/ASVs/ZOTUs were removed!"
+echo -e "\n________________________________________________________________________________\n"
+else
 echo -e "\nProcess succeeded! (Duration: "$dur"s) Rare OTUs/ASVs/ZOTUs are removed from your 
 dataset using the following settings:"
 echo
 echo "Minimum sum of reads within all samples: " $depth
 echo "Minimum sample occurences: " $samples
 echo -e "\n________________________________________________________________________________\n"
+fi
+
 fi
 fi
 fi
