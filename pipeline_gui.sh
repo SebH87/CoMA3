@@ -793,6 +793,7 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/rename.py ./
 python3 rename.py otu_table.txt 2>> $wd/${date}_detailed.log
+rm OTU.biom
 biom convert -i otu_table.txt -o OTU.biom --to-hdf5 --table-type="OTU table" --process-obs-metadata taxonomy &>> $wd/${date}_detailed.log
 
 rm rename.py
@@ -825,6 +826,8 @@ fi
 
 if [ $shell = "Yes" ]
 then
+
+mkdir -p summary_reports
 
 (zenity --no-wrap --question --title $project --text "Do you want to use the information in the mapping file to group your samples?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
 
@@ -871,6 +874,7 @@ cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/kingdom_table.py ./
 python3 kingdom_table.py current_otu_table.txt $kingdom.txt $kingdom &>> $wd/${date}_detailed.log
 python3 otu_summary.py $kingdom.txt summary_report_$kingdom.txt $entries 2>> $wd/${date}_detailed.log
+mv summary_report_$kingdom.txt ./summary_reports/summary_report_$kingdom.txt
 rm kingdom_table.py
 rm otu_summary.py
 rm $kingdom.txt
