@@ -787,8 +787,6 @@ fi
 if [ $shell = "Yes" ]
 then
 
-echo -e "\nRenaming of samples in progress ..."
-
 cd $wd/Results
 
 cp /usr/local/Pipeline/rename.py ./
