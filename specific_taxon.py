@@ -25,4 +25,4 @@ with open(infile) as inf:
                 continue
                 
 if counter == 0:
-    print("\nTaxon '" + taxon + "' could not be found! Summary report is empty!")
+    print("\nTaxon '" + taxon + "' could not be found! No summary report created!")
