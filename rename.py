@@ -17,7 +17,7 @@ new_names = []
 with open(infile) as inf:
     inf.readline()
     samples = inf.readline().strip().split("\t")[1:-1]
-    print("Please enter the new name for each sample:\n\nATTENTION: Keep in mind that sample names must not include any special character than underscore ('_')!\nFurthermore, it is not possible to have a number on the first position!")
+    print("Please enter the new name for each sample:\n\nATTENTION: Keep in mind that sample names must not include any special character\nthan underscore ('_')! Furthermore, it is not possible to have a number on the\nfirst position!\n")
     for sample in samples:
         print(sample + ": ")
         new_names.append(input())
