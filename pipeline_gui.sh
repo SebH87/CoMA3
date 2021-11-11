@@ -875,7 +875,7 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/kingdom_table.py ./
-python3 kingdom_table.py current_otu_table.txt $kingdom.txt $kingdom &>> $wd/${date}_detailed.log
+python3 kingdom_table.py current_otu_table.txt $kingdom.txt $kingdom 2>> $wd/${date}_detailed.log
 python3 otu_summary.py $kingdom.txt summary_report_${kingdom}_${metavar}.txt $entries 2>> $wd/${date}_detailed.log
 mv summary_report_${kingdom}_${metavar}.txt $wd/Results/summary_reports/. &>> $wd/${date}_detailed.log
 rm kingdom_table.py
@@ -1013,7 +1013,7 @@ do
 cd $wd/Results
 
 cp /usr/local/Pipeline/kingdom_table.py ./
-python3 kingdom_table.py current_otu_table.txt $kd.txt $kd &>> $wd/${date}_detailed.log
+python3 kingdom_table.py current_otu_table.txt $kd.txt $kd 2>> $wd/${date}_detailed.log
 rm kingdom_table.py
 
 mkdir -p taxa_plots
@@ -1368,4 +1368,3 @@ zenity --no-wrap --text "Thank you for using CoMA, the NGS analysis pipeline!
 (C) 2020 
 Sebastian Hupfauf
 Mohammad Etemadi" --title $project --info &>> $wd/${date}_detailed.log
-
