@@ -827,6 +827,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
+cd $wd/Results
 mkdir -p summary_reports
 
 (zenity --no-wrap --question --title $project --text "Do you want to use the information in the mapping file to group your samples?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
@@ -838,12 +839,14 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
 python3 map_group.py otu_table.txt mapping.txt current_otu_table.txt 2>> $wd/${date}_detailed.log
+metavar=$(cat metavar.txt)
+rm metavar.txt
 rm map_group.py
 
 else
 
 cd $wd/Results
-
+metavar="individual"
 cp otu_table.txt ./current_otu_table.txt
 
 fi
@@ -873,8 +876,8 @@ cd $wd/Results
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/kingdom_table.py ./
 python3 kingdom_table.py current_otu_table.txt $kingdom.txt $kingdom &>> $wd/${date}_detailed.log
-python3 otu_summary.py $kingdom.txt summary_report_$kingdom.txt $entries 2>> $wd/${date}_detailed.log
-mv summary_report_$kingdom.txt ./summary_reports/summary_report_$kingdom.txt
+python3 otu_summary.py $kingdom.txt summary_report_${kingdom}_${metavar}.txt $entries 2>> $wd/${date}_detailed.log
+mv summary_report_${kingdom}_${metavar}.txt $wd/Results/summary_reports/. &>> $wd/${date}_detailed.log
 rm kingdom_table.py
 rm otu_summary.py
 rm $kingdom.txt
@@ -912,7 +915,8 @@ cd $wd/Results
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/specific_taxon.py ./
 python3 specific_taxon.py current_otu_table.txt $taxon 2>> $wd/${date}_detailed.log
-python3 otu_summary.py $taxon.txt summary_report_$taxon.txt $entries 2>> $wd/${date}_detailed.log
+python3 otu_summary.py $taxon.txt summary_report_${taxon}_${metavar}.txt $entries 2>> $wd/${date}_detailed.log
+mv summary_report_${taxon}_${metavar}.txt $wd/Results/summary_reports/. &>> $wd/${date}_detailed.log
 rm specific_taxon.py
 rm otu_summary.py
 rm current_otu_table.txt &>> $wd/${date}_detailed.log
