@@ -413,9 +413,9 @@ then
 start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
-
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
-
+#########
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL cdhit -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+########
 ref="RDP"
 
 elif [ $sim = "blast" ]
@@ -581,16 +581,18 @@ fi
 
 cd $wd/Results
 
-if [ -f "OTU.biom" ]
+mv OTU.biom abundance.biom
+
+if [ -f "abundance.biom" ]
 then
 
-if ! [ -s "OTU.biom" ]
+if ! [ -s "abundance.biom" ]
 then
 echo -e "\nATTENTION: There was an error detected during the clustering/aligning process, your abundance file is empty! CoMA run terminated!"
 xargs kill
 fi
 
-biom convert -i OTU.biom -o otu_table.txt --to-tsv --header-key taxonomy  &>> $wd/${date}_detailed.log
+biom convert -i abundance.biom -o abundance.txt --to-tsv --header-key taxonomy  &>> $wd/${date}_detailed.log
 
 cp /usr/local/Pipeline/report.py ./
 python3 report.py &>> $wd/${date}_detailed.log
@@ -657,11 +659,11 @@ cd $wd/Results
 
 echo -e "\nRemoval of rare OTUs/ASVs/ZOTUs proceeding ..."
 
-mv OTU.biom OTU_original.biom
-mv otu_table.txt otu_table_original.txt
+mv abundance.biom abundance_original.biom
+mv abundance.txt abundance_original.txt
 
-filter_otus_from_otu_table.py -i OTU_original.biom -o OTU.biom -n $depth -s $samples &>> $wd/${date}_detailed.log
-biom convert -i OTU.biom -o otu_table.txt --to-tsv --header-key taxonomy &>> $wd/${date}_detailed.log
+filter_otus_from_otu_table.py -i abundance_original.biom -o abundance.biom -n $depth -s $samples &>> $wd/${date}_detailed.log
+biom convert -i abundance.biom -o abundance.txt --to-tsv --header-key taxonomy &>> $wd/${date}_detailed.log
 
 end=$(date +%s)
 dur=$(($end-$start))
@@ -721,18 +723,18 @@ cd $wd/Results
 mkdir -p rarefaction_curves
 cd rarefaction_curves
 
-cp ../otu_table.txt ./
+cp ../abundance.txt ./
 cp /usr/local/Pipeline/create_shared_file.py ./
 cp /usr/local/Pipeline/rarefactionplot.py ./
 
-python3 create_shared_file.py otu_table.txt otu.shared &>> $wd/${date}_detailed.log
-mothur "#rarefaction.single(shared=otu.shared, calc=$calc, processors=$proc)" &>> $wd/${date}_detailed.log
+python3 create_shared_file.py abundance.txt abundance.shared &>> $wd/${date}_detailed.log
+mothur "#rarefaction.single(shared=abundance.shared, calc=$calc, processors=$proc)" &>> $wd/${date}_detailed.log
 python3 rarefactionplot.py $calc $fformat $dpi &>> $wd/${date}_detailed.log
 
 rm create_shared_file.py
 rm rarefactionplot.py
-rm otu_table.txt
-rm otu.shared
+rm abundance.txt
+rm abundance.shared
 
 end=$(date +%s)
 dur=$(($end-$start))
@@ -753,7 +755,7 @@ then
 cd $wd/Results
 
 cp /usr/local/Pipeline/reads.py ./
-python3 reads.py otu_table.txt 2>> $wd/${date}_detailed.log
+python3 reads.py abundance.txt 2>> $wd/${date}_detailed.log
 
 sub=$(zenity --text "Please enter the number of reads for the subsampling:" --title $project --entry 2>> $wd/${date}_detailed.log)
 
@@ -764,11 +766,11 @@ start=$(date +%s)
 
 echo -e "\nSubsampling process proceeding ..."
 
-mv OTU.biom OTU_without_subsampling.biom
-mv otu_table.txt otu_table_without_subsampling.txt
+mv abundance.biom abundance_without_subsampling.biom
+mv abundance.txt abundance_without_subsampling.txt
 
-single_rarefaction.py -i OTU_without_subsampling.biom -o OTU.biom -d $sub  &>> $wd/${date}_detailed.log
-biom convert -i OTU.biom -o otu_table.txt --to-tsv --header-key taxonomy &>> $wd/${date}_detailed.log
+single_rarefaction.py -i abundance_without_subsampling.biom -o abundance.biom -d $sub  &>> $wd/${date}_detailed.log
+biom convert -i abundance.biom -o abundance.txt --to-tsv --header-key taxonomy &>> $wd/${date}_detailed.log
 
 rm reads.py
 
@@ -790,9 +792,9 @@ then
 cd $wd/Results
 
 cp /usr/local/Pipeline/rename.py ./
-python3 rename.py otu_table.txt 2>> $wd/${date}_detailed.log
-rm OTU.biom
-biom convert -i otu_table.txt -o OTU.biom --to-hdf5 --table-type="OTU table" --process-obs-metadata taxonomy &>> $wd/${date}_detailed.log
+python3 rename.py abundance.txt 2>> $wd/${date}_detailed.log
+rm abundance.biom
+biom convert -i abundance.txt -o abundance.biom --to-hdf5 --table-type="OTU table" --process-obs-metadata taxonomy &>> $wd/${date}_detailed.log
 
 rm rename.py
 
@@ -813,7 +815,7 @@ then
 cd $wd/Results
 
 cp /usr/local/Pipeline/mapping.py ./
-python3 mapping.py otu_table.txt mapping.txt 2>> $wd/${date}_detailed.log
+python3 mapping.py abundance.txt mapping.txt 2>> $wd/${date}_detailed.log
 rm mapping.py
 
 fi
@@ -836,7 +838,7 @@ then
 cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
-python3 map_group.py otu_table.txt mapping.txt current_otu_table.txt 2>> $wd/${date}_detailed.log
+python3 map_group.py abundance.txt mapping.txt current_abundance.txt 2>> $wd/${date}_detailed.log
 metavar=$(cat metavar.txt)
 rm metavar.txt
 rm map_group.py
@@ -845,7 +847,7 @@ else
 
 cd $wd/Results
 metavar="individual"
-cp otu_table.txt ./current_otu_table.txt
+cp abundance.txt ./current_abundance.txt
 
 fi
 
@@ -873,7 +875,7 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/kingdom_table.py ./
-python3 kingdom_table.py current_otu_table.txt $kingdom.txt $kingdom 2>> $wd/${date}_detailed.log
+python3 kingdom_table.py current_abundance.txt $kingdom.txt $kingdom 2>> $wd/${date}_detailed.log
 python3 otu_summary.py $kingdom.txt summary_report_${kingdom}_${metavar}.txt $entries 2>> $wd/${date}_detailed.log
 mv summary_report_${kingdom}_${metavar}.txt $wd/Results/summary_reports/. &>> $wd/${date}_detailed.log
 rm kingdom_table.py
@@ -882,7 +884,7 @@ rm $kingdom.txt
 
 done
 
-rm current_otu_table.txt &>> $wd/${date}_detailed.log
+rm current_abundance.txt &>> $wd/${date}_detailed.log
 
 end=$(date +%s)
 dur=$(($end-$start))
@@ -912,12 +914,12 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/otu_summary.py ./
 cp /usr/local/Pipeline/specific_taxon.py ./
-python3 specific_taxon.py current_otu_table.txt $taxon 2>> $wd/${date}_detailed.log
+python3 specific_taxon.py current_abundance.txt $taxon 2>> $wd/${date}_detailed.log
 python3 otu_summary.py $taxon.txt summary_report_${taxon}_${metavar}.txt $entries 2>> $wd/${date}_detailed.log
 mv summary_report_${taxon}_${metavar}.txt $wd/Results/summary_reports/. &>> $wd/${date}_detailed.log
 rm specific_taxon.py
 rm otu_summary.py
-rm current_otu_table.txt &>> $wd/${date}_detailed.log
+rm current_abundance.txt &>> $wd/${date}_detailed.log
 rm $taxon.txt
 
 end=$(date +%s)
@@ -945,7 +947,7 @@ then
 cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
-python3 map_group.py otu_table.txt mapping.txt current_otu_table.txt 2>> $wd/${date}_detailed.log
+python3 map_group.py abundance.txt mapping.txt current_abundance.txt 2>> $wd/${date}_detailed.log
 metavar=$(cat metavar.txt)
 rm metavar.txt
 rm map_group.py
@@ -954,7 +956,7 @@ else
 
 cd $wd/Results
 
-cp otu_table.txt ./current_otu_table.txt
+cp abundance.txt ./current_abundance.txt
 metavar="individual"
 
 fi
@@ -1011,7 +1013,7 @@ do
 cd $wd/Results
 
 cp /usr/local/Pipeline/kingdom_table.py ./
-python3 kingdom_table.py current_otu_table.txt $kd.txt $kd 2>> $wd/${date}_detailed.log
+python3 kingdom_table.py current_abundance.txt $kd.txt $kd 2>> $wd/${date}_detailed.log
 rm kingdom_table.py
 
 mkdir -p taxa_plots
@@ -1033,7 +1035,7 @@ rm $kd.txt
 
 done
 
-rm current_otu_table.txt &>> $wd/${date}_detailed.log
+rm current_abundance.txt &>> $wd/${date}_detailed.log
 
 end=$(date +%s)
 dur=$(($end-$start))
@@ -1088,7 +1090,7 @@ echo -e "\nPlots are beeing created ..."
 cd $wd/Results
 
 cp /usr/local/Pipeline/specific_taxon.py ./
-python3 specific_taxon.py current_otu_table.txt $tax 2>> $wd/${date}_detailed.log
+python3 specific_taxon.py current_abundance.txt $tax 2>> $wd/${date}_detailed.log
 rm specific_taxon.py
 
 mkdir -p taxa_plots
@@ -1107,7 +1109,7 @@ rm $tax.txt
 cd $wd/Results
 
 rm $tax.txt
-rm current_otu_table.txt &>> $wd/${date}_detailed.log
+rm current_abundance.txt &>> $wd/${date}_detailed.log
 
 end=$(date +%s)
 dur=$(($end-$start))
@@ -1133,17 +1135,17 @@ mkdir -p Venn_plots
 cd Venn_plots
 
 cp /usr/local/Pipeline/venn_plot.py ./
-cp ../otu_table.txt ./
+cp ../abundance.txt ./
 
 if [[ -f "../mapping.txt" ]]
 then
-python3 venn_plot.py otu_table.txt ../mapping.txt 2>> $wd/${date}_detailed.log
+python3 venn_plot.py abundance.txt ../mapping.txt 2>> $wd/${date}_detailed.log
 else
-python3 venn_plot.py otu_table.txt 2>> $wd/${date}_detailed.log
+python3 venn_plot.py abundance.txt 2>> $wd/${date}_detailed.log
 fi
 
 rm venn_plot.py
-rm otu_table.txt
+rm abundance.txt
 
 fi
 
@@ -1172,7 +1174,7 @@ cp /usr/local/Pipeline/alphadiversity_mapped.py ./
 
 if [[ -f "../mapping.txt" ]]
 then
-python3 alphadiversity_mapped.py ../otu_table.txt $metric ../mapping.txt ../OTUphylo.nwk 2>> $wd/${date}_detailed.log
+python3 alphadiversity_mapped.py ../abundance.txt $metric ../mapping.txt ../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 else
 echo -e "\nYou are missing a map file, process terminated!"
 echo -e "\n________________________________________________________________________________\n"
@@ -1186,7 +1188,7 @@ mkdir -p alpha_diversity
 
 cd alpha_diversity
 cp /usr/local/Pipeline/alphadiversity.py ./
-python3 alphadiversity.py ../otu_table.txt $metric ../OTUphylo.nwk 2>> $wd/${date}_detailed.log
+python3 alphadiversity.py ../abundance.txt $metric ../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 rm alphadiversity.py
 
 fi
@@ -1228,13 +1230,13 @@ if [ $shell = "Yes" ]
 then
 
 cp /usr/local/Pipeline/ordination_mapped.py ./
-python3 ordination_mapped.py ../../otu_table.txt $metric ../../mapping.txt ../../OTUphylo.nwk 2>> $wd/${date}_detailed.log
+python3 ordination_mapped.py ../../abundance.txt $metric ../../mapping.txt ../../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 rm ordination_mapped.py
 
 else
 
 cp /usr/local/Pipeline/ordination.py ./
-python3 ordination.py ../../otu_table.txt $metric ../../OTUphylo.nwk 2>> $wd/${date}_detailed.log
+python3 ordination.py ../../abundance.txt $metric ../../OTUphylo.nwk 2>> $wd/${date}_detailed.log
 rm ordination.py
 
 fi
@@ -1254,13 +1256,13 @@ if [ $shell = "Yes" ]
 then
 
 cp /usr/local/Pipeline/ordination_mapped.py ./
-python3 ordination_mapped.py ../../otu_table.txt $metric ../../mapping.txt $p 2>> $wd/${date}_detailed.log
+python3 ordination_mapped.py ../../abundance.txt $metric ../../mapping.txt $p 2>> $wd/${date}_detailed.log
 rm ordination_mapped.py
 
 else
 
 cp /usr/local/Pipeline/ordination.py ./
-python3 ordination.py ../../otu_table.txt $metric $p 2>> $wd/${date}_detailed.log
+python3 ordination.py ../../abundance.txt $metric $p 2>> $wd/${date}_detailed.log
 rm ordination.py
 
 fi
@@ -1274,13 +1276,13 @@ if [ $shell = "Yes" ]
 then
 
 cp /usr/local/Pipeline/ordination_mapped.py ./
-python3 ordination_mapped.py ../../otu_table.txt $metric ../../mapping.txt 2>> $wd/${date}_detailed.log
+python3 ordination_mapped.py ../../abundance.txt $metric ../../mapping.txt 2>> $wd/${date}_detailed.log
 rm ordination_mapped.py
 
 else
 
 cp /usr/local/Pipeline/ordination.py ./
-python3 ordination.py ../../otu_table.txt $metric 2>> $wd/${date}_detailed.log
+python3 ordination.py ../../abundance.txt $metric 2>> $wd/${date}_detailed.log
 rm ordination.py
 
 fi
@@ -1339,11 +1341,11 @@ cd cluster_analysis
 
 cp /usr/local/Pipeline/cluster.py ./
 cp /usr/local/Pipeline/create_shared_file.py ./
-python3 create_shared_file.py ../../otu_table.txt otu.shared &>> $wd/${date}_detailed.log
-python3 cluster.py otu.shared $meth $metr $anno $fformat $dpi 2>> $wd/${date}_detailed.log
+python3 create_shared_file.py ../../abundance.txt abundance.shared &>> $wd/${date}_detailed.log
+python3 cluster.py abundance.shared $meth $metr $anno $fformat $dpi 2>> $wd/${date}_detailed.log
 rm cluster.py
 rm create_shared_file.py
-rm otu.shared
+rm abundance.shared
 
 end=$(date +%s)
 dur=$(($end-$start))
