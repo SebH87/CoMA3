@@ -27,7 +27,7 @@ Click 'No' to continue/recalculate an existing project." 2> /dev/null) && shell=
 if [ $shell = "Yes" ]
 then
 
-out=$(zenity --forms --title="New project" --text="Alright, let's start a new project!" --add-entry="Project name" 2> /dev/null)
+out=$(zenity --forms --title="New project" --text="Alright, let's start a new project!\n\nATTENTION: Please use a project name that does not include any special characters other than '_'! Furthermore, the project name must not start with a number on the first position!" --add-entry="Project name" 2> /dev/null)
 if [[ $? -eq 1 ]]
 then 
 exit
