@@ -430,7 +430,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -taxAligner $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 ref="RDP"
 
@@ -483,7 +483,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -taxAligner $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -500,7 +500,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -taxAligner $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -510,7 +510,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -taxAligner $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -539,7 +539,7 @@ end=$(date +%s)
 dur=$(($end-$start))
 
 echo -e "\nSequence alignment and taxonomic assignment were successful! (Duration: "$dur"s) 
-Output files are created using following settings:"
+\nOutput files are created using following settings:"
 echo
 
 if [ $chim = "0" ]
@@ -553,16 +553,18 @@ fi
 if [ $clust = "dada2" ]
 then
 echo "ASV clustering algorithm: " $clust
+echo "Sequence identity for ASVs: 1.0"
 elif [ $clust = "unoise" ]
 then
 echo "ZOTU clustering algorithm: " $clust
+echo "Sequence identity for ZOTUs: 1.0"
+elif [ $clust = "cdhit" ]
+then
+echo "OTU clustering algorithm: " $clust
+echo "Sequence identity for OTUs: " $ident
 else
 echo "OTU clustering algorithm: " $clust
-fi
-
-if [ $clust = "cdhit" ]
-then
-echo "Sequence identity for OTUs: " $ident
+echo "Sequence identity for OTUs: 0.97"
 fi
 
 echo "Taxonomic aligner: " $sim
