@@ -383,7 +383,7 @@ echo -e "\n_____________________________________________________________________
 
 fi
 
-#Blasting using lotus: http://psbweb05.psb.ugent.be/lotus/tutorial_R.html
+#Sequence clustering and taxonomic assignment using lotus2: http://lotus2.earlham.ac.uk/main.php?site=documentation
 
 (zenity --no-wrap --question --title $project --text "Do you want to align your sequences and make a taxonomic assignment?" &>> $wd/${date}_detailed.log) && shell="Yes" || shell="No"
 
@@ -402,7 +402,16 @@ cp /usr/local/Pipeline/create_map.py ./
 python3 create_map.py name.txt map.txt &>> $wd/${date}_detailed.log
 rm create_map.py
 
-sim=$(zenity --text "Please choose an aligner tool:" --title $project --list --column "Aligner" --column "Database" "RDP" "search against the RDP database" "blast" "you can choose between various databases (including custom DB)" "lambda" "you can choose between various databases (including custom DB)" --separator="," --height=250 --width=600 2>> $wd/${date}_detailed.log)
+clust=$(zenity --text "Please choose an algorithm for clustering your data into OTUs/ASVs/ZOTUs:" --title $project --list --column "Cluster algorithm" --column "Groups" "uparse" "OTU" "swarm" "OTU" "cdhit" "OTU" "unoise" "ZOTU" "dada2" "ASV" --separator="," --height=250 --width=600 2>> $wd/${date}_detailed.log)
+
+if [ $clust = "uparse" -o $clust = "swarm" -o $clust = "cdhit" ]
+then
+ident=$(zenity --forms --title=$project --text="Please enter the sequence identity used for OTU clustering:" --add-entry="Identity [0.0 - 1.0]:" 2>> $wd/${date}_detailed.log)
+else
+ident="1"
+fi
+
+sim=$(zenity --text "Please choose a taxonomic aligner tool:" --title $project --list --column "Aligner" --column "Database" "RDP" "search against the RDP database" "blast" "you can choose between various databases (including custom DB)" "lambda" "you can choose between various databases (including custom DB)" --separator="," --height=250 --width=600 2>> $wd/${date}_detailed.log)
 
 if [[ $? -ne 1 ]]
 then
@@ -413,9 +422,9 @@ then
 start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
-#########
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL cdhit -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
-########
+
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+
 ref="RDP"
 
 elif [ $sim = "blast" ]
@@ -465,7 +474,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -482,7 +491,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -492,7 +501,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -546,7 +555,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
@@ -563,7 +572,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 
@@ -573,7 +582,7 @@ start=$(date +%s)
 
 echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
 
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
+lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
 
 fi
 fi
