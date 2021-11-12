@@ -406,9 +406,9 @@ clust=$(zenity --text "Please choose an algorithm for clustering your data into 
 
 if [ $clust = "cdhit" ]
 then
-ident=$(zenity --forms --title=$project --text="Please enter the sequence identity used for OTU clustering:" --add-entry="Identity [0.8 - 1.0]:" 2>> $wd/${date}_detailed.log)
+ident=$(zenity --entry --title=$project --text="Please enter the sequence identity used for OTU clustering:\n[0.8 - 1.0]" --entry-text="0.97" 2>> $wd/${date}_detailed.log)
 else
-ident="1"
+ident="0.97"
 fi
 
 if [ $clust = "swarm" -o $clust = "cdhit" -o $clust = "unoise" -o $clust = "dada2" ]
