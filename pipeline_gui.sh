@@ -541,7 +541,31 @@ dur=$(($end-$start))
 echo -e "\nSequence alignment and taxonomic assignment were successful! (Duration: "$dur"s) 
 Output files are created using following settings:"
 echo
-echo "Aligner: " $sim
+
+if [ $chim = "0" ]
+then
+echo "Algorithm for chimera removal: usearch"
+elif [ $chim = "1" ]
+then
+echo "Algorithm for chimera removal: vsearch"
+fi
+
+if [ $clust = "dada2" ]
+then
+echo "ASV clustering algorithm: " $clust
+elif [ $clust = "unoise" ]
+then
+echo "ZOTU clustering algorithm: " $clust
+else
+echo "OTU clustering algorithm: " $clust
+fi
+
+if [ $clust = "cdhit" ]
+then
+echo "Sequence identity for OTUs: " $ident
+fi
+
+echo "Taxonomic aligner: " $sim
 
 if [[ $ref == *"SLV"* ]]
 then
