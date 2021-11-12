@@ -411,7 +411,7 @@ else
 ident="1"
 fi
 
-if [ $clust = "swarm" -o $clust = "cdhit" -o $clust = "unoise" ]
+if [ $clust = "swarm" -o $clust = "cdhit" -o $clust = "unoise" -o $clust = "dada2" ]
 then
 chim=$(zenity --text "Please choose an algorithm for removing chimera sequences:" --title $project --list --column "Option" --column "Chimera removal algorithm" "0" "USEARCH" "1" "VSEARCH" --separator="," --height=150 --width=400 2>> $wd/${date}_detailed.log)
 else
