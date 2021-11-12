@@ -418,7 +418,7 @@ else
 chim="0"
 fi
 
-sim=$(zenity --text "Please choose a taxonomic aligner tool:" --title $project --list --column "Aligner" --column "Database" "RDP" "search against the RDP database" "blast" "you can choose between various databases (including custom DB)" "lambda" "you can choose between various databases (including custom DB)" --separator="," --height=250 --width=600 2>> $wd/${date}_detailed.log)
+sim=$(zenity --text "Please choose a taxonomic aligner tool:" --title $project --list --column "Aligner" --column "Database" "RDP" "search against the RDP database" "blast" "you can choose between various databases (including custom DB)" "lambda" "you can choose between various databases (including custom DB)" "usearch" "you can choose between various databases (including custom DB)" "vsearch" "you can choose between various databases (including custom DB)" --separator="," --height=250 --width=600 2>> $wd/${date}_detailed.log)
 
 if [[ $? -ne 1 ]]
 then
@@ -434,86 +434,7 @@ lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch
 
 ref="RDP"
 
-elif [ $sim = "blast" ]
-then
-
-ref=$(zenity --text "Please choose a reference database:
-
-Databases can be combined, with the first having the highest prioirty (e.g. PR2,SLV would 
-first use PR2 to assign OTUs/ASVs/ZOTUs and all unassigned OTUs/ASVs/ZOTUs would be searched for with SILVA).
-
-For detailed information on custom databases and how they need to be formatted, please visit:
-http://psbweb05.psb.ugent.be/lotus/images/CustomDB_LotuS.pdf 
-
-ATTENTION: A custom database cannot be combined with any other database!
-
-- SLV: Silva LSU (23/28S) or SSU (16/18S)
-- GG: Greengenes (only 16S available)
-- UNITE: ITS focused on fungi
-- PR2: SSU focused on Protists
-- HITdb: database specialized only on human gut microbiota
-- beetax: bee gut specific database
-- CD: custom database
-" --title $project --height=250 --width=600 --entry 2>> $wd/${date}_detailed.log)
-
-if [[ $? -ne 1 ]]
-then 
-
-if [ $ref = "CD" ]
-then
-
-customdb=$(zenity --title "Please choose your database file (in fasta format):" --file-selection 2>> $wd/${date}_detailed.log)
-
-cd
-cd $( dirname $customdb)
-
-if [[ $? -ne 1 ]]
-then 
-
-customtax=$(zenity --title "Please choose your taxonomy file:" --file-selection 2>> $wd/${date}_detailed.log)
-
-if [[ $? -ne 1 ]]
-then
-
-cd
-
-start=$(date +%s)
-
-echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
-
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -refDB $customdb  -tax4refDB $customtax -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
-
-fi
-fi
-
-elif [[ $ref == *"SLV"* ]]
-then
-
-type=$(zenity --text "Which Silva database do you want to use?" --title $project --list --column "" --column "" "LSU" "Database for large ribosomal subunit (23/28S)" "SSU" "Database for small ribosomal subunit (16/18S)" --height=250 --width=600 2>> $wd/${date}_detailed.log)
-
-if [[ $? -ne 1 ]]
-then 
-
-start=$(date +%s)
-
-echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
-
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -amplicon_type $type -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
-
-fi
-
-else
-
-start=$(date +%s)
-
-echo -e "\nSequence alignment and taxonomic assignment proceeding ..."
-
-lotus2 -c /usr/local/Pipeline/lotus2/lOTUs.cfg -CL $clust -id $ident -useVsearch $chim -p miSeq -thr $proc -simBasedTaxo $sim -refDB $ref -greengenesSpecies 0 -i $wd/Data/filtered_reads/good_sequences/ -m $wd/Data/map.txt -o $wd/Results -s /usr/local/Pipeline/lotus2/configs/sdm_miSeq.txt &>> $wd/${date}_detailed.log
-
-fi
-fi
-
-elif [ $sim = "lambda" ]
+elif [ $sim = "lambda" -o $sim = "blast" -o $sim = "usearch" -o $sim = "vsearch" ]
 then
 
 cd $wd
