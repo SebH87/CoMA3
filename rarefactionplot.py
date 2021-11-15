@@ -2,10 +2,11 @@
 #
 # Script creates a rarefaction plot out of a given rarefaction file.
 #
-# USAGE: python rarefactionplot.py calculator fileformat dpi
+# USAGE: python rarefactionplot.py calculator fileformat dpi abundance_file
 #        calculator: sobs, chao, shannon, simpson, coverage
 #        fileformat: eps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff
 #        dpi: figure resolution [int]
+#        abundance_file: in .shared format
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -17,29 +18,36 @@ import random
 matplotlib.use("Agg")
 
 if sys.argv[1] == "sobs":
-    infile = "otu.groups.rarefaction"
-    ylabel = "OTUs"
-    title = "OTUs"
-    filename = "otu"
+    infile = "abundance.groups.rarefaction"
+    with open(sys.argv[4]) as abf:
+        line = abf.readline()
+    if "ASV" in line:
+        ylabel = "ASVs"
+        filename = "asv"
+    elif "Zotu" in line:
+        ylabel = "ZOTUs"
+        filename = "zotu"
+    elif "OTU" in line:
+        ylabel = "OTUs"
+        filename = "otu"
+    else:
+        ylabel = "Sobs"
+        filename = "sobs"
 if sys.argv[1] == "chao":
-    infile = "otu.groups.r_chao"
-    ylabel = "Chao1 index"
-    title = "Chao1"
+    infile = "abundance.groups.r_chao"
+    ylabel = "Chao1 richness"
     filename = sys.argv[1]
 if sys.argv[1] == "shannon":
-    infile = "otu.groups.r_shannon"
+    infile = "abundance.groups.r_shannon"
     ylabel = "H'"
-    title = "Shannon-Wiener"
     filename = sys.argv[1]
 if sys.argv[1] == "simpson":
-    infile = "otu.groups.r_simpson"
+    infile = "abundance.groups.r_simpson"
     ylabel = "D"
-    title = "Simpson"
     filename = sys.argv[1]
 if sys.argv[1] == "coverage":
-    infile = "otu.groups.r_coverage"
+    infile = "abundance.groups.r_coverage"
     ylabel = "Coverage"
-    title = "Coverage"
     filename = sys.argv[1]
 
 ext = "." + sys.argv[2].lower()
