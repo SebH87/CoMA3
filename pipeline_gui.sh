@@ -655,7 +655,7 @@ fi
 if [ $shell = "Yes" ]
 then
 
-calc=$(zenity --text "Please choose a calculator for rarefaction analysis:" --title $project --list --column "Calculator" --column "" "otu" "Observed taxonomic units" "chao" "Chao1 richness estimator" "shannon" "Shannon-Wiener diversity index" "simpson" "Simpson diversity index" "coverage" "Good's coverage for OTU" --separator="," --height=225 --width=400 2>> $wd/${date}_detailed.log)
+calc=$(zenity --text "Please choose a calculator for rarefaction analysis:" --title $project --list --column "Calculator" --column "" "otu" "Observed OTUs/ASVs/ZOTUs" "chao" "Chao1 richness estimator" "shannon" "Shannon-Wiener diversity index" "simpson" "Simpson diversity index" "coverage" "Good's coverage for OTU" --separator="," --height=225 --width=400 2>> $wd/${date}_detailed.log)
 
 if [[ $? -ne 1 ]]
 then
@@ -692,7 +692,7 @@ cp /usr/local/Pipeline/rarefactionplot.py ./
 
 python3 create_shared_file.py abundance.txt abundance.shared &>> $wd/${date}_detailed.log
 mothur "#rarefaction.single(shared=abundance.shared, calc=$calc, processors=$proc)" &>> $wd/${date}_detailed.log
-python3 rarefactionplot.py $calc $fformat $dpi &>> $wd/${date}_detailed.log
+python3 rarefactionplot.py $calc $fformat $dpi abundance.shared &>> $wd/${date}_detailed.log
 
 rm create_shared_file.py
 rm rarefactionplot.py
