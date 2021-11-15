@@ -781,6 +781,15 @@ cp /usr/local/Pipeline/mapping.py ./
 python3 mapping.py abundance.txt mapping.txt 2>> $wd/${date}_detailed.log
 rm mapping.py
 
+if [ -f "mapping.txt" ]
+then
+echo -e '\nProcess succeeded, "mapping.txt" was created!'
+echo -e "\n________________________________________________________________________________\n"
+else
+echo -e '\nProcess failed! No mapping file was created'
+echo -e "\n________________________________________________________________________________\n"
+fi
+
 fi
 
 #Summary Report
