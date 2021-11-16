@@ -838,7 +838,7 @@ then
 
 start=$(date +%s)
 
-echo -e "\nSummary report is beeing created now ..."
+echo -e "\nSummary report(s) is/are beeing created now ..."
 
 for kingdom in $(echo $sr | sed "s/,/ /g")
 do
