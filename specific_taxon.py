@@ -11,15 +11,13 @@ import sys
 infile = sys.argv[1]
 taxon = sys.argv[2]
 outputfile = taxon + ".txt"
-counter = 0
 
 with open(infile) as inf:
     with open(outputfile, "w") as outf:
         outf.write(inf.readline())
         outf.write(inf.readline())
         for line in inf:
-            if taxon in line:
+            if "__" + taxon + ";" in line:
                 outf.write(line)
-                counter += 1
             else:
                 continue
