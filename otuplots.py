@@ -41,7 +41,7 @@ with open(infile) as inf:
         inf.readline()
         samples = inf.readline().strip().split("\t")[1:-1]
         if inf.readline() == "":
-            print("\n'" + infile + "' is empty! No plots are created for this taxon!")
+            print("\nATTENTION: No summary report could be created for the following taxon: " + infile.split(".")[0])
             sys.exit()
 
 for sample in range(len(samples)):
