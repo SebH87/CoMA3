@@ -24,7 +24,7 @@ with open(infile) as inf:
     inf.readline()
     label = inf.readline()
     if inf.readline() == "":
-        print("\n'" + infile + "' is empty! No summary report file is created for this taxon!")
+        print("\nATTENTION: No summary report could be created for the following taxon: " + infile.split(".")[0])
         sys.exit()
 
 samples = label.strip().split("\t")[1:-1]
