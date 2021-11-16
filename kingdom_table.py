@@ -17,18 +17,12 @@ with open(infile) as inf:
     with open(outfile, "w") as outf:
         outf.write(inf.readline())
         outf.write(inf.readline())
-        counter = 0
         if kingdom == "k__Total":
             for line in inf:
                 outf.write(line)
-                counter += 1
         else:
             for line in inf:
                 if kingdom in line:
                     outf.write(line)
-                    counter += 1
                 else:
                     continue
-                    
-if counter == 0:
-    print("\nATTENTION: No sequences were found for '%s'!"%(sys.argv[3]))
