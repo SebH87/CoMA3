@@ -811,6 +811,13 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
 python3 map_group.py abundance.txt mapping.txt current_abundance.txt 2>> $wd/${date}_detailed.log
+
+if ! [ -s "metavar.txt" ]
+then
+echo -e "\nATTENTION: This metadata variable could not be found! CoMA run terminated!"
+xargs kill
+fi
+
 metavar=$(cat metavar.txt)
 rm metavar.txt
 rm map_group.py
@@ -920,6 +927,13 @@ cd $wd/Results
 
 cp /usr/local/Pipeline/map_group.py ./
 python3 map_group.py abundance.txt mapping.txt current_abundance.txt 2>> $wd/${date}_detailed.log
+
+if ! [ -s "metavar.txt" ]
+then
+echo -e "\nATTENTION: This metadata variable could not be found! CoMA run terminated!"
+xargs kill
+fi
+
 metavar=$(cat metavar.txt)
 rm metavar.txt
 rm map_group.py
