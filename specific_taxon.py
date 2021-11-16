@@ -23,6 +23,3 @@ with open(infile) as inf:
                 counter += 1
             else:
                 continue
-                
-if counter == 0:
-    print("\nTaxon '" + taxon + "' could not be found! No summary report created!")
