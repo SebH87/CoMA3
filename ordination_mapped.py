@@ -93,6 +93,11 @@ if len(map_DF.columns) > 1:
 else:
     var = map_DF.columns[0]
     print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
+ 
+if not var in map_DF.columns:
+    zp.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! Beta diversity cannot be calculated and no plots are created!"%(var))
+    sys.exit(1)    
+    
 three = zp.question(title="CoMA", text="Do you want to see a 3D illustration of your ordination?")
 two = zp.question(title="CoMA", text="Do you want to create a two-dimensional plot of your ordination?")
 
