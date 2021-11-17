@@ -122,7 +122,7 @@ sns.despine(right=True)
 plt.ylabel(label)
 plt.xticks(rotation=90)
 
-plt.savefig(figname, dpi=dpi)
+plt.savefig(figname, dpi=dpi, bbox_inches='tight')
 
 end = time.time()
 dur = str(int(round(end - start, 0)))
