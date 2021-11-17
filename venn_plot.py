@@ -61,6 +61,11 @@ if mapping == True:
     else:
         var = map_DF.columns[0]
         print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
+    
+    if not var in map_DF.columns:
+        pz.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! No Venn plots are created!"%(var))
+        sys.exit(1)
+        
     if len(map_DF[var].value_counts()) > 3:
         pz.error(title="CoMA", text="You can only create Venn plots for the comparison of 2 or 3 groups! You provided %s groups, process terminated!")
         print("\nYou can only create Venn plots for the comparison of 2 or 3 groups! You provided %s groups, process terminated!")
@@ -73,6 +78,7 @@ if mapping == True:
         sys.exit(1)
     else:
         dim = len(map_DF[var].value_counts())
+        
 elif mapping == False:
     dim = pz.entry(title="CoMA", text="How many groups do you want to compare?\n\npossibilities: 2 or 3\n")
     if dim == None:
