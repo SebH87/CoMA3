@@ -25,8 +25,22 @@ table = sys.argv[1]
 metric = sys.argv[2]
 if metric == "OTU":
     metric = "observed_otus"
-    label = "OTU"
-    mname = "OTU"
+    with open(table) as abf:
+        abf.readline()
+        abf.readline()
+        line = abf.readline().split("\t")[0]
+    if "ASV" in line:
+        label = "ASVs"
+        mname = "asv"
+    elif "Zotu" in line:
+        label = "ZOTUs"
+        mname = "zotu"
+    elif "OTU" in line:
+        label = "OTUs"
+        mname = "otu"
+    else:
+        label = "Sobs"
+        mname = "sobs" 
 if metric == "Shannon":
     metric = "shannon"
     label = "H'"
