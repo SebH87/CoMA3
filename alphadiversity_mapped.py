@@ -76,6 +76,10 @@ else:
     var = map_df.columns[0]
     print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
 
+if not var in map_df.columns:
+    zp.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! Alpha diversity cannot be calculated and no plot is created!"%(var))
+    sys.exit(1)
+
 ftype = zp.entry(title="CoMA", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
 if ftype == None:
     print("\nProcess terminated!")
