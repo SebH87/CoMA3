@@ -6,18 +6,22 @@
 # USAGE: python cluster.py otu_table_file method metric annotation fileformat dpi color_threshold(optional)
 #       -> method: single, complete, average, centroid, weighted, median, ward
 #       -> metric: euclidean, cityblock, cosine, correlation, jaccard, braycurtis, dice, ...
-#       -> annotation: True, False
+#       -> annotation: Yes, No
 #       -> fileformat: eps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff
 #       -> dpi: figure resolution [int]
 #       -> color_threshold [0, 100]: Enter percent similarity, before a new color is assigned
 
-import matplotlib.pyplot as plt
 import matplotlib
+import sys
+import random
+import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+import pandas as pd
+import zenipy as zp
 from scipy.cluster.hierarchy import dendrogram, linkage, cophenet, set_link_color_palette
 from scipy.spatial.distance import pdist
-import sys
+from matplotlib.lines import Line2D
 
 matplotlib.use("Agg")
 
@@ -85,6 +89,57 @@ ax = plt.gca()
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 ax.spines['bottom'].set_visible(False)
-plt.ylabel(metric + " distance")
-plt.tight_layout()
-plt.savefig("dendrogram_%s_%s"%(method, metric) + ext, dpi=dpi)
+
+#Color-coding of samples
+
+answer = zp.question(title="CoMA", text="Do you want to use metadata to color-code your samples?")
+
+if answer == True:
+
+    map_file = "mapping.txt"
+    map_df = pd.read_csv(map_file, delimiter="\t", index_col=0)
+
+    if len(map_df.columns) > 1:
+        var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to color-code your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
+    else:
+        var = map_df.columns[0]
+        print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
+    
+    if not var in map_df.columns:
+        zp.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! Alpha diversity cannot be calculated and no plot is created!"%(var))
+        sys.exit(1)
+  
+    if map_df[var].nunique() > 5:
+        interv = np.linspace(0, 0.7, map_df[var].nunique())
+    elif map_df[var].nunique() == 2:
+        interv = np.linspace(0, 0.3, 2)
+    else:
+        interv = np.linspace(0, 0.55, map_df[var].nunique())  
+    colors = plt.cm.terrain(interv)
+    colors = [x[:-1]*255 for x in colors]
+    color_list = []
+    for color in colors:
+        color = [hex(int(round(x, 0)))[2:] for x in color]
+        color_list.append("#" + "".join(color))
+    random.shuffle(color_list)
+  
+    meta_groups = []
+    legend_elements = []
+    for v in range(len(map_df[var].unique())):
+        meta_groups.append(list(map_df[map_df[var] == map_df[var].unique()[v]].index))
+        legend_elements.append(Line2D([0], [0], marker='o', color='w', label=map_df[var].unique()[v], markerfacecolor=color_list[v], markersize=15))
+
+    for tick in ax.get_xticklabels():
+        sname = tick.get_text()
+        for i in range(len(meta_groups)):
+            if sname in meta_groups[i]:
+                tick.set_color(color_list[i])
+            
+    ax.legend(handles=legend_elements, loc='right', frameon=False)
+    plt.ylabel(metric + " distance")
+    plt.tight_layout()
+    plt.savefig("dendrogram_%s_%s_%s"%(method, metric, var) + ext, dpi=dpi)
+else:
+    plt.ylabel(metric + " distance")
+    plt.tight_layout()
+    plt.savefig("dendrogram_%s_%s"%(method, metric) + ext, dpi=dpi)
