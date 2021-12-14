@@ -1327,11 +1327,13 @@ cd cluster_analysis
 
 cp /usr/local/Pipeline/cluster.py ./
 cp /usr/local/Pipeline/create_shared_file.py ./
+cp ../../mapping.txt ./ &>> $wd/${date}_detailed.log
 python3 create_shared_file.py ../../abundance.txt abundance.shared &>> $wd/${date}_detailed.log
 python3 cluster.py abundance.shared $meth $metr $anno $fformat $dpi 2>> $wd/${date}_detailed.log
 rm cluster.py
 rm create_shared_file.py
 rm abundance.shared
+rm -f mapping.txt
 
 end=$(date +%s)
 dur=$(($end-$start))
