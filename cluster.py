@@ -97,7 +97,11 @@ answer = zp.question(title="CoMA", text="Do you want to use metadata to color-co
 if answer == True:
 
     map_file = "mapping.txt"
-    map_df = pd.read_csv(map_file, delimiter="\t", index_col=0)
+    try:
+        map_df = pd.read_csv(map_file, delimiter="\t", index_col=0)
+    except:
+        print("ATTENTION: Mapping file ('mapping.txt') could not be found! Process is terminated and no dendrogram is created!")
+        sys.exit(1)
 
     if len(map_df.columns) > 1:
         var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to color-code your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
