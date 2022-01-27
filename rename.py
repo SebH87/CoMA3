@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20018
+# (c) Sebastian Hupfauf 2022
 #
 # Script chamges samples names within a given OTU-table file and sorts samples
 # in alphabetical order.
