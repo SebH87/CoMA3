@@ -1,3 +1,9 @@
+# (c) Sebastian Hupfauf 2022
+#
+# Script for creating a report file of the sequence processing steps in CoMA3.
+#
+# USAGE: python report.py
+
 import pandas as pd
 import os
 import glob
