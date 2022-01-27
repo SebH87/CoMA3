@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# CoMA Pipeline
-# Copyright (C) 2020 Sebastian Hupfauf, Mohammad Etemadi
+# CoMA3 Pipeline
+# Copyright (C) 2022 Sebastian Hupfauf, Mohammad Etemadi
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 project=$(echo $wd | rev | cut -d"/" -f1 | rev)
 
 echo -e "\n********************************************************************************"
-echo "      Welcome to CoMA, the pipeline for amplicon sequencing data analysis!           "
+echo "      Welcome to CoMA3, the pipeline for amplicon sequencing data analysis!           "
 echo -e "********************************************************************************\n"
 echo -e "Project: "$project"\n"
 echo -e "________________________________________________________________________________\n"
@@ -119,7 +119,7 @@ then
 
 if ! [[ -f "threads.txt" ]]
 then
-echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -138,7 +138,7 @@ do
 
 if ! [[ -f $thread ]]
 then
-echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -158,7 +158,7 @@ do
 
 if ! [ -s processed_reads/${file}.fastq ]
 then
-echo -e "\nATTENTION: There was an error detected during the merging process, at least one of your files containing merged reads is empty! Check the pattern.txt file and if all paired-end files are provided. CoMA run terminated!"
+echo -e "\nATTENTION: There was an error detected during the merging process, at least one of your files containing merged reads is empty! Check the pattern.txt file and if all paired-end files are provided. CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -195,7 +195,7 @@ echo -e "\nQuality check of input files proceeding ..."
 
 if ! [[ -f "threads.txt" ]]
 then
-echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -204,7 +204,7 @@ do
 
 if ! [[ -f $thread ]]
 then
-echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -267,7 +267,7 @@ cd ..
 
 if ! [[ -f "threads.txt" ]]
 then
-echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -276,7 +276,7 @@ do
 
 if ! [[ -f $thread ]]
 then
-echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -324,7 +324,7 @@ echo -e "\nQuality control of trimmed reads proceeding ..."
 
 if ! [[ -f "threads.txt" ]]
 then
-echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: Your threads.txt file is empty, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -333,7 +333,7 @@ do
 
 if ! [[ -f $thread ]]
 then
-echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: One of your n*.txt files is missing, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -392,7 +392,7 @@ then
 
 if ! [[ -f "name.txt" ]]
 then
-echo -e "\nATTENTION: Your name.txt file is empty, please rerun sample registration! - CoMA run terminated!"
+echo -e "\nATTENTION: Your name.txt file is empty, please rerun sample registration! - CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -525,7 +525,7 @@ then
 
 if ! [ -s "abundance.biom" ]
 then
-echo -e "\nATTENTION: There was an error detected during the clustering/aligning process, your abundance file is empty! CoMA run terminated!"
+echo -e "\nATTENTION: There was an error detected during the clustering/aligning process, your abundance file is empty! CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -814,7 +814,7 @@ python3 map_group.py abundance.txt mapping.txt current_abundance.txt 2>> $wd/${d
 
 if ! [ -s "metavar.txt" ]
 then
-echo -e "\nATTENTION: This metadata variable could not be found! CoMA run terminated!"
+echo -e "\nATTENTION: This metadata variable could not be found! CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -930,7 +930,7 @@ python3 map_group.py abundance.txt mapping.txt current_abundance.txt 2>> $wd/${d
 
 if ! [ -s "metavar.txt" ]
 then
-echo -e "\nATTENTION: This metadata variable could not be found! CoMA run terminated!"
+echo -e "\nATTENTION: This metadata variable could not be found! CoMA3 run terminated!"
 xargs kill
 fi
 
@@ -1351,8 +1351,8 @@ fi
 fi
 fi
 
-zenity --no-wrap --text "Thank you for using CoMA, the NGS analysis pipeline! 
+zenity --no-wrap --text "Thank you for using CoMA3, the NGS analysis pipeline! 
 
-(C) 2020 
+(C) 2022
 Sebastian Hupfauf
 Mohammad Etemadi" --title $project --info &>> $wd/${date}_detailed.log
