@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates a shared file for creating rarefaction curves using the
 # "Mothur" software out of a given OTU-table file.
