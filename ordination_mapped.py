@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20020
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates ordination (beta diversity) plots out of a provided OTU-table
 # file using a given metric. Optionally, a tree file can be provided in order to
@@ -7,7 +7,7 @@
 # USAGE: python ordination_mapped.py otu_table metric mapping_file tree_file/p-norm(optional)
 #        metric: Weighted_unifrac, Unweighted_unifrac, Minkowski, Euclidean, 
 #                Manhattan, Cosine, Jaccard, Canberra, Chebyshev, Braycurtis, Dice
-#        mapping_file: CoMA formatted mapping file (tab-delimited TXT format)
+#        mapping_file: CoMA3 formatted mapping file (tab-delimited TXT format)
 #        tree_file: in NEWICK format (solely used for Weighted/Unweighted_unifrac)
 #        p-norm: integer > 2 (solely used for Minkowski)
 
@@ -67,7 +67,7 @@ if metric == "weighted_unifrac" or metric == "unweighted_unifrac":
     try:
         tree_file = sys.argv[4]
     except:
-        zp.error(title="CoMA", text="A tree file is required for the calculation of the Unifrac distance!")
+        zp.error(title="CoMA3", text="A tree file is required for the calculation of the Unifrac distance!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
@@ -76,12 +76,12 @@ if metric == "Minkowski":
     try:
         p = int(sys.argv[4])
     except:
-        zp.error(title="CoMA", text="P-norm must be a positive integer!")
+        zp.error(title="CoMA3", text="P-norm must be a positive integer!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
     if p < 1:
-        zp.error(title="CoMA", text="P-norm must be a positive integer!")
+        zp.error(title="CoMA3", text="P-norm must be a positive integer!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
@@ -89,26 +89,26 @@ if metric == "Minkowski":
     mname = "minkowski"      
 
 if len(map_DF.columns) > 1:
-    var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to color your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
+    var = zp.entry(title="CoMA3", text="Based on which metadata variable do you want to color your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
 else:
     var = map_DF.columns[0]
     print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
  
 if not var in map_DF.columns:
-    zp.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! Beta diversity cannot be calculated and no plots are created!"%(var))
+    zp.error(title="CoMA3", text="ATTENTION: Metadata variable '%s' could not be found! Beta diversity cannot be calculated and no plots are created!"%(var))
     sys.exit(1)    
     
-three = zp.question(title="CoMA", text="Do you want to see a 3D illustration of your ordination?")
-two = zp.question(title="CoMA", text="Do you want to create a two-dimensional plot of your ordination?")
+three = zp.question(title="CoMA3", text="Do you want to see a 3D illustration of your ordination?")
+two = zp.question(title="CoMA3", text="Do you want to create a two-dimensional plot of your ordination?")
 
 if two == True:
-    ftype = zp.entry(title="CoMA", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
+    ftype = zp.entry(title="CoMA3", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
     if ftype == None:
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
     elif ftype not in ["eps", "jpeg", "pdf", "png", "ps", "raw", "rgba", "svg", "svgz", "tiff"]:
-        zp.error(title="CoMA", text="Invalid Input, process terminated!")
+        zp.error(title="CoMA3", text="Invalid Input, process terminated!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
@@ -119,7 +119,7 @@ if two == True:
             figname = "PCoA_" + mname + "_" + var + "." + ftype 
 
     if ftype in ["jpeg", "png", "raw", "rgba", "tiff"]:
-        dpi = zp.entry(title="CoMA", text="Please enter the resolution [dpi]:")
+        dpi = zp.entry(title="CoMA3", text="Please enter the resolution [dpi]:")
         if dpi == None:
             print("\nProcess terminated!")
             print("\n________________________________________________________________________________\n")
@@ -127,7 +127,7 @@ if two == True:
         try:
             dpi = int(dpi)
         except:
-            zp.error(title="CoMA", text="Invalid Input, process terminated!")
+            zp.error(title="CoMA3", text="Invalid Input, process terminated!")
             print("\nProcess terminated!")
             print("\n________________________________________________________________________________\n")
             sys.exit(1)
@@ -173,7 +173,7 @@ for ev in pc.eigvals:
     if ev < 0:
         warn += 1
 if warn > 0:
-    zp.error(title="CoMA", text="ATTENTION: At least 1 of your eigenvalues is negative, potentially leading to problems! You may want to choose another metric for distance calculation or apply data transformation on the distance matrix (e.g. square root) to get rid of this problem.")
+    zp.error(title="CoMA3", text="ATTENTION: At least 1 of your eigenvalues is negative, potentially leading to problems! You may want to choose another metric for distance calculation or apply data transformation on the distance matrix (e.g. square root) to get rid of this problem.")
 
 eig_dm = pd.DataFrame(pc.eigvals, columns=["Eigenvalue"])
 eig_dm["Explained"] = pc.proportion_explained
