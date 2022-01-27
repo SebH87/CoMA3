@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates a summary file containing the x (entries) most recurrent results 
 # in each taxonomic level for each sample out of a given OTU-table file.
