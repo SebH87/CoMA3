@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates an OTU-table file containing only OTUs corresponding to the given taxon
 # out of a given OTU-table file.
