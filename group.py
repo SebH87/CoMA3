@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20018
+# (c) Sebastian Hupfauf 2022
 #
 # Script groups samples/replicates together and sort the newly defined groups
 # in alphabetical order.
@@ -11,13 +11,13 @@ import os
 import statistics
 import time
 
-method = pz.entry(title="CoMA", text="Please choose the method for grouping:\n\nSum: sum of all reads\nMean: mean of all reads\nMedian: median of all reads\n")
+method = pz.entry(title="CoMA3", text="Please choose the method for grouping:\n\nSum: sum of all reads\nMean: mean of all reads\nMedian: median of all reads\n")
 if method == None:
     print("\nGrouping process terminated!")
     print("\n________________________________________________________________________________\n")
     sys.exit(3)
 if method not in ["Sum", "Mean", "Median"]:
-    pz.error(title="CoMA", text="Invalid Input, process terminated!")
+    pz.error(title="CoMA3", text="Invalid Input, process terminated!")
     print("\nGrouping process terminated!")
     print("\n________________________________________________________________________________\n")
     sys.exit(3)
@@ -40,19 +40,19 @@ entry = "_init_"
 
 while rem_samples != []:
     question = 'Please Enter the samplenumbers of group %s,\nseparated with ","(e.g. 1,2,3,4):\n\n'%(count + 1) + "".join(rem_samples)
-    entry = pz.entry(title="CoMA", text=question)
+    entry = pz.entry(title="CoMA3", text=question)
     if entry == None:
         print("\nGrouping process terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
     if entry == "":
-        pz.error(title="CoMA", text="Invalid Input, process terminated!")
+        pz.error(title="CoMA3", text="Invalid Input, process terminated!")
         print("\nGrouping process terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(2)
     for el in entry.strip().strip(",").strip().split(","):
         if el not in num:
-            pz.error(title="CoMA", text="Invalid Input, process terminated!")
+            pz.error(title="CoMA3", text="Invalid Input, process terminated!")
             print("\nGrouping process terminated!")
             print("\n________________________________________________________________________________\n")
             sys.exit(2)
@@ -61,7 +61,7 @@ while rem_samples != []:
     for s_num in entry.split(","):
         samples[int(s_num) - 1] = ""
         num.remove(s_num)
-    grp_name = pz.entry(title="CoMA", text="Please enter the name for group %s:"%(count + 1))
+    grp_name = pz.entry(title="CoMA3", text="Please enter the name for group %s:"%(count + 1))
     if grp_name == None:
         print("\nGrouping process terminated!")
         print("\n________________________________________________________________________________\n")
