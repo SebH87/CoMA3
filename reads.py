@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script counts the reads for each sample in an OTU-table file und prints the 
 # result in decreasing order.
