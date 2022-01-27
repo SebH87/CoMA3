@@ -65,7 +65,7 @@ if metric == "Faith_PD":
     try:
         tree_file = sys.argv[3]
     except:
-        zp.error(title="CoMA", text="A tree file is required for the calculation of Faith's phylogenetic diversity!")
+        zp.error(title="CoMA3", text="A tree file is required for the calculation of Faith's phylogenetic diversity!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
@@ -73,13 +73,13 @@ if metric == "Faith_PD":
     label = "Faith's PD"
     mname = "faith_pd"
 
-ftype = zp.entry(title="CoMA", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
+ftype = zp.entry(title="CoMA3", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
 if ftype == None:
     print("\nProcess terminated!")
     print("\n________________________________________________________________________________\n")
     sys.exit(1)
 elif ftype not in ["eps", "jpeg", "pdf", "png", "ps", "raw", "rgba", "svg", "svgz", "tiff"]:
-    zp.error(title="CoMA", text="Invalid Input, process terminated!")
+    zp.error(title="CoMA3", text="Invalid Input, process terminated!")
     print("\nProcess terminated!")
     print("\n________________________________________________________________________________\n")
     sys.exit(1)
@@ -87,7 +87,7 @@ else:
     figname = "alphadiversity_" + mname + "." + ftype 
 
 if ftype in ["jpeg", "png", "raw", "rgba", "tiff"]:
-    dpi = zp.entry(title="CoMA", text="Please enter the resolution [dpi]:")
+    dpi = zp.entry(title="CoMA3", text="Please enter the resolution [dpi]:")
     if dpi == None:
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
@@ -95,14 +95,14 @@ if ftype in ["jpeg", "png", "raw", "rgba", "tiff"]:
     try:
         dpi = int(dpi)
     except:
-        zp.error(title="CoMA", text="Invalid Input, process terminated!")
+        zp.error(title="CoMA3", text="Invalid Input, process terminated!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
 else:
     dpi = 200
 
-col = zp.color_selection(title="CoMA")
+col = zp.color_selection(title="CoMA3")
 col = [float(x) / 255 for x in col[4:-1].split(",")]
 
 start = time.time()
