@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20020
+# (c) Sebastian Hupfauf 20022
 #
 # Script creates alpha diversity plots out of a provided OTU-table file using a
 # given metric. Optionally, a tree file can be provided in order to calculate
