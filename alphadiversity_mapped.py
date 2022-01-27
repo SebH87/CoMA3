@@ -156,7 +156,7 @@ combined_df = pd.concat([div_df, map_df], axis=1)
 combined_df.rename(columns={'index':'sample'}, inplace=True)
 combined_df = combined_df.sort_values(by=[var])
 
-output_df = pd.concat([combined_df.groupby(var).mean(), combined_df.groupby(var).std()], axis=1)
+output_df = pd.concat([combined_df.groupby(var).mean()[metric], combined_df.groupby(var).std()[metric]], axis=1)
 output_df.columns = ["Mean", "Std"]
 output_df = output_df.replace(np.nan, '', regex=True)
 output_df.to_csv("alphadiversity_" + mname + "_" + var + ".txt", sep="\t")
