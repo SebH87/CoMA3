@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20019
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates Venn diagrams for comparison of two or three groups. Plots are
 # created for each taxonomic level and are showing overlapping and unique taxa.
@@ -46,33 +46,33 @@ def TaxLvlList(infile, spls):
 
 input_file = sys.argv[1]
 
-mapping = pz.question(title="CoMA", text="Do you want to use the information in the mapping file to group your samples?")
+mapping = pz.question(title="CoMA3", text="Do you want to use the information in the mapping file to group your samples?")
 if mapping == True:
     try:
         map_file = sys.argv[2]
     except:
-        pz.error(title="CoMA", text="No mapping file provided, process terminated!")
+        pz.error(title="CoMA3", text="No mapping file provided, process terminated!")
         print("\nNo mapping file provided, process terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
     map_DF = pd.read_csv(map_file, delimiter="\t", index_col=0)
     if len(map_DF.columns) > 1:
-        var = pz.entry(title="CoMA", text="Based on which metadata variable do you want to group your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
+        var = pz.entry(title="CoMA3", text="Based on which metadata variable do you want to group your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_DF.columns) + "\n")
     else:
         var = map_DF.columns[0]
         print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
     
     if not var in map_DF.columns:
-        pz.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! No Venn plots are created!"%(var))
+        pz.error(title="CoMA3", text="ATTENTION: Metadata variable '%s' could not be found! No Venn plots are created!"%(var))
         sys.exit(1)
         
     if len(map_DF[var].value_counts()) > 3:
-        pz.error(title="CoMA", text="You can only create Venn plots for the comparison of 2 or 3 groups! You provided %s groups, process terminated!")
+        pz.error(title="CoMA3", text="You can only create Venn plots for the comparison of 2 or 3 groups! You provided %s groups, process terminated!")
         print("\nYou can only create Venn plots for the comparison of 2 or 3 groups! You provided %s groups, process terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
     elif len(map_DF[var].value_counts()) == 1:
-        pz.error(title="CoMA", text="You can only create Venn plots for the comparison of 2 or 3 groups! You provided only 1 group, process terminated!")
+        pz.error(title="CoMA3", text="You can only create Venn plots for the comparison of 2 or 3 groups! You provided only 1 group, process terminated!")
         print("\nYou can only create Venn plots for the comparison of 2 or 3 groups! You provided only 1 group, process terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
@@ -80,7 +80,7 @@ if mapping == True:
         dim = len(map_DF[var].value_counts())
         
 elif mapping == False:
-    dim = pz.entry(title="CoMA", text="How many groups do you want to compare?\n\npossibilities: 2 or 3\n")
+    dim = pz.entry(title="CoMA3", text="How many groups do you want to compare?\n\npossibilities: 2 or 3\n")
     if dim == None:
             print("\nProcess terminated!")
             print("\n________________________________________________________________________________\n")
@@ -88,23 +88,23 @@ elif mapping == False:
     elif dim in ["2", "3"]:
         dim = int(dim)
     else:
-        pz.error(title="CoMA", text="Invalid Input, process terminated!")
+        pz.error(title="CoMA3", text="Invalid Input, process terminated!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
 else:
-    pz.error(title="CoMA", text="Process terminated!")
+    pz.error(title="CoMA3", text="Process terminated!")
     print("\nProcess terminated!")
     print("\n________________________________________________________________________________\n")
     sys.exit(1)
 
-ftype = pz.entry(title="CoMA", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
+ftype = pz.entry(title="CoMA3", text="Which fileformat do you prefer?\n\neps, jpeg, pdf, png, ps, raw, rgba, svg, svgz, tiff\n")
 if ftype == None:
     print("\nProcess terminated")
     print("\n________________________________________________________________________________\n")
     sys.exit(1)
 elif ftype not in ["eps", "jpeg", "pdf", "png", "ps", "raw", "rgba", "svg", "svgz", "tiff"]:
-    pz.error(title="CoMA", text="Invalid Input, process terminated!")
+    pz.error(title="CoMA3", text="Invalid Input, process terminated!")
     print("\nProcess terminated!")
     print("\n________________________________________________________________________________\n")
     sys.exit(1)
@@ -115,7 +115,7 @@ else:
         figname = "Venn." + ftype 
 
 if ftype in ["jpeg", "png", "raw", "rgba", "tiff"]:
-    dpi = pz.entry(title="CoMA", text="Please enter the resolution [dpi]:")
+    dpi = pz.entry(title="CoMA3", text="Please enter the resolution [dpi]:")
     if dpi == None:
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
@@ -123,7 +123,7 @@ if ftype in ["jpeg", "png", "raw", "rgba", "tiff"]:
     try:
         dpi = int(dpi)
     except:
-        pz.error(title="CoMA", text="Invalid Input, process terminated!")
+        pz.error(title="CoMA3", text="Invalid Input, process terminated!")
         print("\nProcess terminated!")
         print("\n________________________________________________________________________________\n")
         sys.exit(1)
@@ -161,7 +161,7 @@ if mapping == False:
     while count < dim:
         rem_samples = [k for k in samples if k != ""]
         question = 'Please Enter the samplenumbers of group %s,\nseparated with ","(e.g. 1,2,3,4):\n\n'%(count + 1) + "".join(rem_samples)
-        entry = pz.entry(title="CoMA", text=question)
+        entry = pz.entry(title="CoMA3", text=question)
         if entry == None:
             print("\nGrouping process terminated!")
             print("\n________________________________________________________________________________\n")
@@ -172,7 +172,7 @@ if mapping == False:
             sys.exit(1)
         for el in entry.strip().strip(",").strip().split(","):
             if el not in num:
-                pz.error(title="CoMA", text="Invalid Input, process terminated!")
+                pz.error(title="CoMA3", text="Invalid Input, process terminated!")
                 print("\nGrouping process terminated!")
                 print("\n________________________________________________________________________________\n")
                 sys.exit(2)
@@ -181,7 +181,7 @@ if mapping == False:
         for s_num in entry.split(","):
             samples[int(s_num) - 1] = ""
             num.remove(s_num)
-        grp_name = pz.entry(title="CoMA", text="Please enter the name for group %s:"%(count + 1))
+        grp_name = pz.entry(title="CoMA3", text="Please enter the name for group %s:"%(count + 1))
         if grp_name == None:
             print("\nGrouping process terminated!")
             print("\n________________________________________________________________________________\n")
@@ -193,7 +193,7 @@ if mapping == False:
         labels.append(grp_name)
         count += 1
 
-lab = pz.question(title="CoMA", text="Do you want to label all areas with the exact number of taxa? In some cases, this might lead to overlapping issues.")
+lab = pz.question(title="CoMA3", text="Do you want to label all areas with the exact number of taxa? In some cases, this might lead to overlapping issues.")
 
 start = time.time()
 print("\nCreation of Venn plots proceeding ...")
