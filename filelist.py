@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 2020
+# (c) Sebastian Hupfauf 2022
 #
 # Script writes all files contained in the current directory and matching a given
 # pattern to an output file (of given name).
@@ -19,7 +19,7 @@ cpu = int(sys.argv[3])
 try:
     revpattern = sys.argv[4]
     if pattern == revpattern:
-        print("ATTENTION: You have entered the same pattern for your forward and reverse files - CoMA run terminated!\n")
+        print("ATTENTION: You have entered the same pattern for your forward and reverse files - CoMA3 run terminated!\n")
         os.kill(os.getppid(),signal.SIGTERM)
 except:
     revpattern = pattern
