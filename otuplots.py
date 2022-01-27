@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates a heatmap as well as a bar chart of taxa for each taxonomic
 # level out of a given OTU-table file. Taxa with an abundance below the threshold
