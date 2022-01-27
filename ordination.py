@@ -182,6 +182,8 @@ if two == True:
     matplotlib.use("Agg")
     sns.set_style("ticks")
     sns.scatterplot(data=pc.samples, x="PC1", y="PC2", color=col)
+    plt.axhline(0, color='grey', linestyle="dotted", linewidth=0.8)
+    plt.axvline(0, color='grey', linestyle="dotted", linewidth=0.8)
     plt.legend(frameon=False, loc='upper left', bbox_to_anchor=(1.04, 1), ncol=1)
     plt.xlabel("PC 1 (" + str(round(pc.proportion_explained[0] * 100, 2)) + "%)")
     plt.ylabel("PC 2 (" + str(round(pc.proportion_explained[1] * 100, 2)) + "%)")
