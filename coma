@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# CoMA Pipeline
-# Copyright (C) 2020 Sebastian Hupfauf, Mohammad Etemadi
+# CoMA3 Pipeline
+# Copyright (C) 2022 Sebastian Hupfauf, Mohammad Etemadi
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 # coma-mikrobiologie@uibk.ac.at
 
 
-(zenity --no-wrap --question --title="CoMA" --text "Welcome to CoMA, a pipeline for amplicon sequencing data analysis! 
+(zenity --no-wrap --question --title="CoMA3" --text "Welcome to CoMA3, a pipeline for amplicon sequencing data analysis! 
 
 Do you want to start a new project?
 Click 'No' to continue/recalculate an existing project." 2> /dev/null) && shell="Yes" || shell="No"
