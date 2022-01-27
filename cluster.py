@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script computes a hierarchical clustering of samples given in a OTU-table
 # file (in shared format) and saves a dendrogram plot.
