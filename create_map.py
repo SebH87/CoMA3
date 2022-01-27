@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 20017
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates a map file for NGS analysis using the tool "lOTUs" out of a
 # given name file.
