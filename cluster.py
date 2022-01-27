@@ -92,7 +92,7 @@ ax.spines['bottom'].set_visible(False)
 
 #Color-coding of samples
 
-answer = zp.question(title="CoMA", text="Do you want to use metadata to color-code your samples?")
+answer = zp.question(title="CoMA3", text="Do you want to use metadata to color-code your samples?")
 
 if answer == True:
 
@@ -104,13 +104,13 @@ if answer == True:
         sys.exit(1)
 
     if len(map_df.columns) > 1:
-        var = zp.entry(title="CoMA", text="Based on which metadata variable do you want to color-code your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
+        var = zp.entry(title="CoMA3", text="Based on which metadata variable do you want to color-code your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
     else:
         var = map_df.columns[0]
         print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
     
     if not var in map_df.columns:
-        zp.error(title="CoMA", text="ATTENTION: Metadata variable '%s' could not be found! Alpha diversity cannot be calculated and no plot is created!"%(var))
+        zp.error(title="CoMA3", text="ATTENTION: Metadata variable '%s' could not be found! Alpha diversity cannot be calculated and no plot is created!"%(var))
         sys.exit(1)
   
     if map_df[var].nunique() > 5:
