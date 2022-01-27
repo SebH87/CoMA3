@@ -1,4 +1,4 @@
-# (c) Sebastian Hupfauf 2020
+# (c) Sebastian Hupfauf 2022
 #
 # Script creates a rarefaction plot out of a given rarefaction file.
 #
