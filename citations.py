@@ -2,7 +2,7 @@
 #
 # Script for creating a file containing all used software including each reference.
 #
-# USAGE: python report.py
+# USAGE: python citations.py
 
 import shutil
 import os
