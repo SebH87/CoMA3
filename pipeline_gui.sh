@@ -1351,6 +1351,12 @@ fi
 fi
 fi
 
+#Create citation file
+cd $wd/Results
+cp /usr/local/Pipeline/citations.py ./
+python3 citations.py
+rm citations.py
+
 zenity --no-wrap --text "Thank you for using CoMA3, the NGS analysis pipeline! 
 
 (C) 2022
