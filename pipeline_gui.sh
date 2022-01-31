@@ -1315,8 +1315,6 @@ fi
 if [[ $? -ne 1 ]]
 then
 
-start=$(date +%s)
-
 echo -e "\nCluster analysis proceeding ..."
 
 cd $wd/Results
@@ -1335,11 +1333,6 @@ rm create_shared_file.py
 rm abundance.shared
 rm -f mapping.txt
 
-end=$(date +%s)
-dur=$(($end-$start))
-
-echo -e "\nProcess succeeded! Dendrogram created! (Duration: "$dur"s)"
-echo
 echo "Clustering method: " $meth
 echo "Clustering metric: " $metr
 echo -e "\n________________________________________________________________________________\n"
