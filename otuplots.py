@@ -396,7 +396,6 @@ if not dfo.empty:
         fs = 12
     ax = sns.heatmap(dfo, annot=False, fmt="f", cmap=sns.cubehelix_palette(8, start=.1, rot=-.75, as_cmap=True), linewidths=.2 / scale, xticklabels=samples, yticklabels=True)
     plt.xticks(rotation=90)
-    plt.axes()
     ax.set_yticklabels(reversed(list(dfo.index[::-1])), rotation=0, fontsize=fs)
     plt.savefig("order_heatmap" + ext, dpi=dpi, bbox_inches='tight')
     plt.clf()
