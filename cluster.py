@@ -14,6 +14,7 @@
 import matplotlib
 import sys
 import random
+import time
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -92,7 +93,7 @@ ax.spines['bottom'].set_visible(False)
 
 #Color-coding of samples
 
-answer = zp.question(title="CoMA3", text="Do you want to use metadata to color-code your samples?")
+answer = zp.question(title="CoMA3", text="Do you want to use metadata to colour your sample names?")
 
 if answer == True:
 
@@ -104,14 +105,16 @@ if answer == True:
         sys.exit(1)
 
     if len(map_df.columns) > 1:
-        var = zp.entry(title="CoMA3", text="Based on which metadata variable do you want to color-code your samples?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
+        var = zp.entry(title="CoMA3", text="Based on which metadata variable do you want to colour your sample names?\n\nYou can select between the following variables:\n\n" + ", ".join(map_df.columns) + "\n")
     else:
         var = map_df.columns[0]
         print("Only 1 metadata variable detected, variable '%s' was selected!"%(var))
     
     if not var in map_df.columns:
-        zp.error(title="CoMA3", text="ATTENTION: Metadata variable '%s' could not be found! Alpha diversity cannot be calculated and no plot is created!"%(var))
+        zp.error(title="CoMA3", text="ATTENTION: Metadata variable '%s' could not be found! Cluster analysis cannot be calculated and no plot is created!"%(var))
         sys.exit(1)
+
+    start = time.time()
   
     if map_df[var].nunique() > 5:
         interv = np.linspace(0, 0.7, map_df[var].nunique())
@@ -144,6 +147,11 @@ if answer == True:
     plt.tight_layout()
     plt.savefig("dendrogram_%s_%s_%s"%(method, metric, var) + ext, dpi=dpi)
 else:
+    start = time.time()
+    
     plt.ylabel(metric + " distance")
     plt.tight_layout()
     plt.savefig("dendrogram_%s_%s"%(method, metric) + ext, dpi=dpi)
+    
+end = time.time()
+print("\nProcess succeeded! Dendrogram created! (Duration: %is)\n"%(int(round((end - start), 0))))
