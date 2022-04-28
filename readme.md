@@ -8,6 +8,15 @@
 
 Comparative Microbiome Analysis
 
+<div id="badges">
+  <a href="https://hub.docker.com/r/sebh87/coma3">
+    <img src="https://img.shields.io/badge/Docker-blue?style=for-the-badge&logo=docker&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
+  <a href="https://www.uibk.ac.at/microbiology/services/coma.html">
+    <img src="https://img.shields.io/badge/CoMA webpage-red?style=for-the-badge&logo=internetexplorer&logoColor=white" alt="Youtube Badge"/>
+  </a>
+</div>
+
 ## DESCRIPTION
 
 Nowadays, modern biological or medical research is scarcely conceivable without the deep insights that are gained from next-generation sequencing (NGS). These technologies have been constantly improved and yield up to 20 billion reads per run today. This allows for studying highly complex environments such as gut, soil or biogas reactor sludge at a high resolution, but also requires an adequate analysis of the huge amount of generated data. A plethora of software packages for NGS data analysis are available today; however, most of them demand extensive knowledge in computer sciences or even need a bioinformatic specialist to be executed.
