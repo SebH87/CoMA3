@@ -53,3 +53,67 @@ CoMA is a pipeline for NGS data analysis, using various applications, tools and 
 ## SUPPORT
 
 If there are any problems with the installation or the use of CoMA please contact coma-mikrobiologie@uibk.ac.at
+
+## UPDATE NOTES
+
+# CoMA 3.0
+
+# CoMA 2.0
+
+* Two additional options for installation are provided now: a Singularity image and a direct Linux installer.
+
+* The Ubuntu operating system was updated to version 20.04 LTS (in CoMA 1.0: Ubuntu 16.04 LTS).
+
+* All CoMA source files are now available at GitHub: https://github.com/SebH87/coma.
+
+* Support of multithreading. You can assign now multiple CPU cores to CoMA leading to a considerably better performance resulting in shorter computation times.
+
+* Support of USEARCH v11. For more information, please visit the online documentation: https://drive5.com/usearch/manual/whatsnewv11.html.
+
+* All taxonomic databases were updated. This includes also the newest release of the SILVA database (version 138).
+
+* CoMA now offers two log files for each run: a compact log file including the user settings and inputs, and a detailed log file with all the information including potential warnings and error messages.
+
+* Sequences can now be filtered based on the number of ambiguous bases (Ns) in course of the trimming/quality filtering step.
+
+* CoMA now supports the analysis of single-end data or of sequence files that were already merged.
+
+* Sample registration is now a separate step und no longer connected to sequence merging. With that, the merging step can be repeated multiple times without the necessarily to provide the common part of the sample names each time.
+
+* CoMA now checks if input files are missing when analysing paired-end data. Moreover, CoMA now detects wrongly assigned pattern strings in course of the sample registration step.
+
+* Several steps checking for missing dependencies have been implemented in order to help the user locating a problem.
+
+* Rarefaction curves can now be computed based on five different calculators: OTU/ASV/ZOTU count, Chao1 diversity, Shannon-Wiener index, Simpson index, and Good’s coverage for OTU/ASV/ZOTU (compared to only OTU count in CoMA 1.0).
+
+* Samples can now be renamed in order to avoid confusing names, which are often assigned by NGS machines or sequencing companies.
+
+* CoMA now supports metadata, which can be used for grouping samples based on specific parameters.
+
+* CoMA now supports general summary reports (for Archaea, Bacteria, Fungi, Eukaryota, and all data) as well as specific summaries based on a given taxon. The summary reports are provided as tab-delimited text file, where the information can be easily extracted and used for further analysis. In addition, the user can now select the numbers of entries for each taxonomic level (in CoMA 1.0, it was pre-set to 5).
+
+* CoMA now supports general (for Archaea, Bacteria, Fungi, Eukaryota, and all data) and specific taxonomic plots (bar charts, heatmaps) based on a given taxon. In addition, unassigned taxa can now be included or excluded from the depiction.
+
+* CoMA now supports Venn plots for the taxonomic comparison of two or three groups.
+
+* The calculation step for alpha diversity is now improved and the user can choose between various metrics. CoMA supports now also phylogeny-based alpha diversity calculation (Faith’s PD).
+
+* CoMA now offers statistical tests for alpha diversity (Kruskal-Wallis H-test, Conover post-hoc test with Benjamini-Hochberg correction), as long as samples were grouped based on metadata.
+
+* Aside Hierarchical Cluster Analysis (HCA), CoMA now supports ordination (Principal Coordinates Analysis, PCoA) as second option for beta diversity analysis. The user can choose between various metrics, including phylogeny-based weighted/unweighted UniFrac distance.
+
+* CoMA now offers also statistical tests for beta diversity (ANOSIM, PERMANOVA) in order to quantify the strength of clustering determined with PCoA.
+
+* You can now select a file format and, in case of raster graphic formats, the pixel density (DPI) for all CoMA graphics (rarefaction curves, bar charts, heatmaps, Venn plots, alpha diversity plots, PCoA plots, dendrograms). CoMA supports 10 different file formats, including the most popular raster- (e.g. “JPEG”, “PNG”, “TIFF”) and vector- (e.g. “EPS”, “PDF”, “SVG”) graphic formats.
+
+* We established an overall CoMA colour code. All CoMA graphics are now using the same colour palette (ranging from blue to green to yellow to beige). 
+
+* All CoMA 1.0 scripts were revised and optimised where needed.
+
+* CoMA now uses Python 3 (in comparison to Python 2 in CoMA 1.0).
+
+* Any directory can now be used for CoMA projects, allowing much more flexibility and facilitates the usage of CoMA on HPC systems.
+
+* CoMA now shows a warning message if a new project is started using an already existing project name. The user can decide if he wants to keep the old data or overwrite it with the new project.
+
+* The CoMA manual was completely overworked and improved. Moreover, a chapter describing the CoMA output in detail was included.
