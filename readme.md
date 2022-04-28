@@ -28,11 +28,28 @@ If you use CoMA for any published research, please include the following citatio
 
 Hupfauf S, Etemadi M, Fernández-Delgado Juárez M, Gómez-Brandón M, Insam H, et al. (2020) CoMA – an intuitive and user-friendly pipeline for amplicon-sequencing data analysis. PLOS ONE 15(12): e0243241. https://doi.org/10.1371/journal.pone.0243241
 
-## USAGE:
+## INSTALL
 
 For installing CoMA, please visit the product webpage: https://www.uibk.ac.at/microbiology/services/coma.html. You can find there severeal options for installation CoMA on any common operating system. Moreover, you have access to olfer versions of the tool in case you need them.
 
-## SOFTWARE LIST:
+## OUTPUT
+
+This chapter describes the output of the CoMA pipeline in detail and shall help the user to navigate through his/her results. It also tackles files, which were computed during the CoMA run but which are not used by the pipeline directly. However, all files are stored in standardized formats and may be used by advanced users for secondary and more sophisticated analysis (e.g. using R). All result files can be found in the following directory:
+
+__.../Results__
+
+|   Directory   |   Description   |
+|:--------------|:----------------|
+|alpha_diversity|Alpha diversity plot(s) and text file(s) containing the underlying data of the diversity analysis. Moreover, you can find the results of the statistical tests (Kruskal-Wallis H-test, Conover post-hoc test with Benjamini-Hochberg correction) if metadata were used for sample grouping.|
+|beta_diversity|Here you can find two sub-directories including all files from the ordination analysis as well as from the hierarchical cluster analysis. In the “ordination” directory, you find the PCoA plot, the distance matrix and a file containing the eigenvalues for all PC axis. Moreover, you can find the results of the statistical tests using ANOSIM and PERMANOVA if metadata were used for sample grouping. In the “cluster_analysis” directory, you find the dendrogram(s).|
+|ExtraFiles|Here you can find files summarizing the chimera removal step. Moreover, a file including the multiple sequence alignment of OTUs/ASVs/ZOTUs (“OTU.MSA.fna”) is stored here in FASTA format. Divergent positions are indicated with hyphens (“-“).|
+|higherLvl|This directory includes Species, Genus, Family, Class, Order and Phylum abundance matrices.|
+|LotuSLogS|Several log files are stored here. These files are usually not needed; however, they may be helpful in case of unexpected results or other problems. For detailed explanation, please refer to the online documentation of LotuS (the software package that is involved in OTU/ASV/ZOTU clustering and taxonomic assignment): http://lotus2.earlham.ac.uk/.|
+|primary|Here you can find an option file for the sdm tool, which is responsible for the demultiplexing and quality filtering of sequences. In addition, you can find a copy of the map file, which was constructed in course of the analysis.|
+
+
+
+## SOFTWARE LIST
 
 CoMA is a pipeline for NGS data analysis, using various applications, tools and scripts originating from internal and external sources (open-source third party software). Within this section, all external tools are listed. Please follow the web links if you want to get more information on a specific tool. Keep in mind that some of these tools may also be using third party software, for more information consult the prevailing manuals.
 
