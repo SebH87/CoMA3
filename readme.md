@@ -76,19 +76,19 @@ Files:
 
 CoMA is a pipeline for NGS data analysis, using various applications, tools and scripts originating from internal and external sources (open-source third party software). Within this section, all external tools are listed. Please follow the web links if you want to get more information on a specific tool. Keep in mind that some of these tools may also be using third party software, for more information consult the prevailing manuals.
 
-* QIIME
+* [QIIME](http://qiime.org/)
 
-* Mothur
+* [Mothur](https://www.mothur.org/)
 
-* Pandaseq
+* [Pandaseq](https://github.com/neufeld/pandaseq)
 
-* Prinseq-lite
+* [Prinseq-lite](http://prinseq.sourceforge.net/)
 
-* LotuS2
+* [LotuS2](http://lotus2.earlham.ac.uk/)
 
-* USEARCH
+* [USEARCH](http://www.drive5.com/usearch/download.html)
 
-* BIOM-format-tools
+* [BIOM-format-tools](http://biom-format.org/)
 
 ## SUPPORT
 
