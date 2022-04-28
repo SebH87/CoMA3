@@ -63,6 +63,14 @@ Files:
 |abundance_original.txt|This is the original abundance table for your analysis, which was constructed immediately after OTU clustering and taxonomic assignment. It does not include any post-processing steps such as subsampling (equal information to “abundance_original.biom”).|
 |abundance_without_subsampling.biom|This is the BIOM-converted abundance table after the removal of rare OTUs/ASVs/ZOTUs, but without subsampling or sample renaming.|
 |abundance_without_subsampling.txt|This is the abundance table after the removal of rare OTUs/ASVs/ZOTUs, but without subsampling or sample renaming (equal information to “abundance_without_subsampling.biom”).|
+|citations.txt|This file contains a summary of all third party software that was used for the current CoMA run. Please keep in mind that a proper citation strategy helps the development teams to maintain and improve their products!|
+|hiera_BLAST.txt|This abundance file shows the taxonomic assignments based on BLAST. IMPORTANT: Be aware that this file is missing (and replaced by another, e.g. “hiera_RDP.txt”) when BLAST was not the selected aligner tool for taxonomic assignment!|
+|mapping.txt|This file includes all the metadata that were provided by the user. Keep in mind that this file is missing if no metadata were entered (step 31).|
+|OTU.fna|This file shows the extended OTU/ASV/ZOTU seed sequences in FASTA format. The sequences given here are identical to those in “ExtraFiles/OTU.MSA.fna”, but without the hyphens.|
+|OTU.txt|This file represents an OTU/ASV/ZOTU abundance matrix, showing which OTU/ASV/ZOTU appears in which sample/group and at which number.|
+|OTUphylo.nwk|This file represents a taxonomic tree in NEWICK format. It is used for phylogeny-based alpha/beta diversity analyses (Faith’s PD, weighted/unweighted UniFrac distance). Moreover, advanced users may use this for even more-sophisticated secondary analyses based on taxonomic information and the tree structure (e.g. with FastTree, FigTree, GraPhlAn).|
+|phyloseq.Rdata|This is a Phyloseq object, which is ready to be loaded directly in R for secondary data analysis.|
+|rem_seq.txt|This file summarized the amount of sequences that were dropped/lost in course of the analysis. With this information, the user can estimate the overall loss of reads as well as determine which step removed the most sequences (e.g. quality filtering, chimera removal, phiX contaminants).|
 
 ## SOFTWARE LIST
 
