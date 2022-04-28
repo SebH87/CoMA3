@@ -32,29 +32,23 @@ Hupfauf S, Etemadi M, Fernández-Delgado Juárez M, Gómez-Brandón M, Insam H, 
 
 For installing CoMA, please visit the product webpage: https://www.uibk.ac.at/microbiology/services/coma.html. You can find there severeal options for installation CoMA on any common operating system. Moreover, you have access to olfer versions of the tool in case you need them.
 
-## DEPENDENCIES:
+## SOFTWARE LIST:
 
-DeViVa needs some additional Python packages to be installed. You can install them manually or use the DeViVa.install file when working on Linux. Here is a full list of all required Python packages:
+CoMA is a pipeline for NGS data analysis, using various applications, tools and scripts originating from internal and external sources (open-source third party software). Within this section, all external tools are listed. Please follow the web links if you want to get more information on a specific tool. Keep in mind that some of these tools may also be using third party software, for more information consult the prevailing manuals.
 
-* Bio
+* QIIME
 
-* matplotlib
+* Mothur
 
-* numpy
+* Pandaseq
 
-* pandas
+* Prinseq-lite
 
-* scikit-bio
+* LotuS2
 
-* scikit-learn
+* USEARCH
 
-* scipy
-
-* seaborn
-
-## OPTIONS:
-
-With the following options, you can adjust your DeViVa run. All parameters are optional except for -d, which needs to be always provided! Here is a list of all available options:
+* BIOM-format-tools
 
 ## SUPPORT
 
