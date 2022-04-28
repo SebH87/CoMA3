@@ -46,8 +46,11 @@ __.../Results__
 |higherLvl|This directory includes Species, Genus, Family, Class, Order and Phylum abundance matrices.|
 |LotuSLogS|Several log files are stored here. These files are usually not needed; however, they may be helpful in case of unexpected results or other problems. For detailed explanation, please refer to the online documentation of LotuS (the software package that is involved in OTU/ASV/ZOTU clustering and taxonomic assignment): http://lotus2.earlham.ac.uk/.|
 |primary|Here you can find an option file for the sdm tool, which is responsible for the demultiplexing and quality filtering of sequences. In addition, you can find a copy of the map file, which was constructed in course of the analysis.|
-
-
+|rarefaction_curves|This directory includes the rarefaction plot(s), a Mothur log file of the rarefaction analysis, and the underlying data files. The number of files as well as their labelling depends on the chosen calculator. “abundance.groups.rarefaction” summarizes for instance all data when otu was the calculator and “abundance.groups.
+r_shannon” would include the results of a rarefaction analysis based on the Shannon-Wiener diversity.|
+|summary_reports|Here you can find all your summary reports including either all detected taxa (key word “Total”) or entries associated only with a specific taxon. Files including the key word “individual” show results for each individual sample whereas files without show results for groups defined by metadata variables.|
+|taxa_plots|Here you can find all your taxonomic plots (bar charts, heatmaps).|
+|Venn_plots|Here you can find the Venn plots.|
 
 ## SOFTWARE LIST
 
