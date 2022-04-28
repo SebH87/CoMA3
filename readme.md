@@ -56,15 +56,54 @@ If there are any problems with the installation or the use of CoMA please contac
 
 ## UPDATE NOTES
 
-# CoMA 3.0
+__CoMA 3.0__
 
-# CoMA 2.0
+* A fourth installation option for CoMA was added, allowing the usage of the tool from within a Docker container. This option is available for users working on a Linux, macOS, or Windows system.
+
+* CoMA can now also construct ASVs and ZOTUs (which can be interpreted as OTUs with a sequence similarity of 100%) in addition to OTUs.
+
+* CoMA now offers different algorithms for sequence clustering in addition to UPARSE (constructing OTUs): Swarm (OTUs), CD-Hit (OTUs), UNOISE3 (ZOTUs), and DADA2 (ASVs).
+
+* The sequence identity for clustering OTUs can now be adjusted between 80-100% (previously set to 97%). REMARK: This is currently only possible when using CD-Hit!
+
+* The user can now also select VSEARCH for the removal of chimeric sequences (previously only USEARCH). REMARK: This is only possible for clustering algorithms other than UPARSE!
+
+* Two additional aligning tools are now available for taxonomic assignment: USEARCH and VSEARCH (previously only Blast, Lambda and RDP).
+
+* CoMA can now be used without installing USEARCH! ATTENTION: Keep in mind that doing so limits the options for sequence clustering (UPARSE and UNOISE3 are not available in this case), chimera removal (no USEARCH) and taxonomic assignment (no USEARCH)!
+
+* A metadata variable is automatically selected if “mapping.txt” includes only a single one. REMARK: This is only relevant for steps in which the user decides to use metadata for structuring the data (summary reports, taxa plots, Venn plots, alpha diversity plots, ordination plots, and dendrograms).
+
+* CoMA now shows a warning message if summary reports or taxa plots cannot be created because no data were found for the selected taxon.
+
+* Summary reports are now stored in a dedicated directory (/summary_reports).
+
+* Summary reports are now labelled based on the used metadata variable. This allows creating multiple summary reports without overwriting the previous ones.
+
+* Taxa plots are now stored in different directories for each combination of settings (metadata variable, abundance threshold, including/excluding unassigned sequences). This allows creating multiple sets of plots without overwriting the previous ones.
+
+* Running the step for removing rare OTUs/ASVs/ZOTUs with zero no longer leads to an error and the termination of the workflow.
+
+* When doing alpha diversity analysis with metadata, underlying data are now stored as means  standard deviation (previously, results were showed only for individual samples).
+
+* Orientation lines at x=0 and y=0 were added to the PCoA plots.
+
+* Sample names in dendrograms can now be labelled based on metadata. This shall help identifying structures within the dataset.
+
+* A file including all used third party software and their references is now provided in order to guarantee a proper citation.
+
+* All CoMA scripts were generally revised and updated.
+
+* The CoMA manual was improved and updated.
+
+
+__CoMA 2.0__
 
 * Two additional options for installation are provided now: a Singularity image and a direct Linux installer.
 
 * The Ubuntu operating system was updated to version 20.04 LTS (in CoMA 1.0: Ubuntu 16.04 LTS).
 
-* All CoMA source files are now available at GitHub: https://github.com/SebH87/coma.
+* All CoMA source files are now available here on GitHub.
 
 * Support of multithreading. You can assign now multiple CPU cores to CoMA leading to a considerably better performance resulting in shorter computation times.
 
