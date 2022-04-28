@@ -1,3 +1,9 @@
+<img
+     title="a title"
+     alt="Alt text"
+     src="https://www2.uibk.ac.at/images/600x-auto/microbiology/services/coma/coma_logo.webp">
+</img>
+                                                                                             
 # CoMA 3.0
 
 Comparative Microbiome Analysis
@@ -24,11 +30,7 @@ Hupfauf S, Etemadi M, Fernández-Delgado Juárez M, Gómez-Brandón M, Insam H, 
 
 ## USAGE:
 
-DeViVa is a Python script that can be run on any operating system. Please ensure that you are using Python 3.x! To start a DeViVa analysis, go to a terminal and type in:
-
-_python DeViVa.py -d \<data file\>_
-
-You can add additional arguments if needed, but -d is always needed!
+For installing CoMA, please visit the product webpage: https://www.uibk.ac.at/microbiology/services/coma.html. You can find there severeal options for installation CoMA on any common operating system. Moreover, you have access to olfer versions of the tool in case you need them.
 
 ## DEPENDENCIES:
 
@@ -53,3 +55,7 @@ DeViVa needs some additional Python packages to be installed. You can install th
 ## OPTIONS:
 
 With the following options, you can adjust your DeViVa run. All parameters are optional except for -d, which needs to be always provided! Here is a list of all available options:
+
+## SUPPORT
+
+If there are any problems with the installation or the use of CoMA please contact coma-mikrobiologie@uibk.ac.at
