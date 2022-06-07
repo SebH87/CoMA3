@@ -221,7 +221,7 @@ colors = plt.cm.terrain(interval)
 colors = [x[:-1]*255 for x in colors]
 color_list = []
 for color in colors:
-    color = [hex(int(round(x, 0)))[2:] for x in color]
+    color = [str(hex(int(round(x, 0)))[2:]) if round(x, 0) >= 16 else "0" + str(hex(int(round(x, 0)))[2:]) for x in color]
     color_list.append("#" + "".join(color))
 random.shuffle(color_list)
 sns.set_palette(sns.color_palette(color_list))
