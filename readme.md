@@ -30,7 +30,7 @@ The operation of this tool is remarkably intuitive and makes it accessible even 
 CoMA can be run on every common computer operating system: Linux, Windows, and macOS. With version 3.0, four different options for installation are available: a virtual appliance (which can be imported with tools like VMware Workstation, Oracle VM Virtualbox or Parallels Desktop for macOS), a Singularity image, a Docker image, and a direct Linux installer (Bash script). Each option provides specific advantages and the user can select the most suitable one in order to meet his needs. CoMA can also be used on high performance computer systems (HPC cluster). In this case, we suggest using the Singularity option. The following graphical summary shall help finding the ideal usage strategy for every user.
 
 <div align="center">
-<img title="a title" alt="Alt text" src="https://www2.uibk.ac.at/images/600x-auto/microbiology/services/coma/fig1.webp">
+<img title="a title" alt="Alt text" src="https://www.uibk.ac.at/media/filer_public_thumbnails/filer_public/56/96/56964264-0ff4-4e4a-969e-a07507cd35d6/fig1.jpg__960x274_q85_crop_subsampling-2_upscale.jpg.webp">
 </div>
      
 CoMA will be updated regularly to ensure an excellent performance also in the future, but also to implement additional features (e.g. a web-based platform for online data analysis). These updates will always include the newest versions of the taxonomic databases at the release date to guarantee the best possible and most current results.
