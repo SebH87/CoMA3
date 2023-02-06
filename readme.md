@@ -2,7 +2,7 @@
 <img
      title="a title"
      alt="Alt text"
-     src="[https://www.uibk.ac.at/media/filer_public_thumbnails/filer_public/72/c3/72c316a9-a501-4e92-b78e-8428f7223962/coma_logo.jpg__992.0x626.0374531835206_q85_crop_subsampling-2.jpg]">
+     src="https://www.uibk.ac.at/media/filer_public_thumbnails/filer_public/72/c3/72c316a9-a501-4e92-b78e-8428f7223962/coma_logo.jpg__992.0x626.0374531835206_q85_crop_subsampling-2.jpg">
 </img>
 </div>
                                                                                              
