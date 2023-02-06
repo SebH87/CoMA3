@@ -43,7 +43,7 @@ Hupfauf S, Etemadi M, Fernández-Delgado Juárez M, Gómez-Brandón M, Insam H, 
 
 ## INSTALL
 
-For installing CoMA, please visit the product webpage: https://www.uibk.ac.at/microbiology/services/coma.html. You can find there severeal options for installation CoMA on any common operating system. Moreover, you have access to olfer versions of the tool in case you need them.
+For installing CoMA, please visit the product webpage: https://www.uibk.ac.at/microbiology/services/coma. You can find there severeal options for installation CoMA on any common operating system. Moreover, you have access to olfer versions of the tool in case you need them.
 
 ## OUTPUT
 
